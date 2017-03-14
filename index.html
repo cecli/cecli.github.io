@@ -7,10 +7,13 @@
     </head>
     <body>
         <script type="text/javascript">
-		d3.select("body").append("p").text("New paragraph!");
+		d3.select("body").append("p").text("New paragraph using javascript!");
+		var dataset = [ 5, 10, 15, 20, 25 ];
+		d3.select("body").selectAll("p").data(dataset).enter().append("p").text("New paragraph multiple!");
+		d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d) { return d; });
         </script>
 		<h1>Page Title</h1>
-		<p>This is a paragraph.</p>
+		<p>This is a paragraph using simple html.</p>
 		<p>Below is a picture</p>
 		<font face="cambria" color="green" size="10"> This is some green text in Cambria font, size 12!</font>
 		<svg width="500" height="500">
