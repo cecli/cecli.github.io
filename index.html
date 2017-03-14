@@ -19,9 +19,21 @@
     <body>
         <script type="text/javascript">
 		//d3.select("body").append("p").text("New paragraph using javascript!");
-		var dataset = [ 5, 10, 15, 20, 25 ];
-		d3.select("body").selectAll("p")
+		var dataset = [ 25, 7, 11, 8, 25, 12 ];
+			
+		d3.select("body").selectAll("div")
 			.data(dataset)
+			.enter()
+			.append("div")
+			.attr("class", "bar")
+			.style("height", function(d) {
+				var	barHeight = d + 5;
+				return barHeight + "px";
+			});
+		
+		var dataset2 = [ 5, 10, 15, 20, 25 ];
+		d3.select("body").selectAll("p")
+			.data(dataset2)
 			.enter()
 			.append("p")
 			.text(function(d) {
