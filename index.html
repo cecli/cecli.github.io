@@ -9,7 +9,13 @@
         <script type="text/javascript">
 		//d3.select("body").append("p").text("New paragraph using javascript!");
 		var dataset = [ 5, 10, 15, 20, 25 ];
-		d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d) { return d; });
+		d3.select("body").selectAll("p")
+			.data(dataset)
+			.enter()
+			.append("p")
+			.text(function(d) {
+				return "I can count up to " + d;
+			});
         </script>
 		<h1>Page Title</h1>
 		<p>This is a paragraph using simple html.</p>
