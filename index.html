@@ -22,7 +22,41 @@
 					} else {
 						return "black";
 					}
-			});
+			})
+			.style("font-size", "24px")
+			.style("font-weight", "bold")
+			.style("font-family","sans-serif")
+	
+			
+			var rectData = [
+				{"x":0, "y":160, "width":80, "height":80, "fill":"purple", "stroke":"gray", "stroke-width":2, "opacity":1},
+				{"x":40, "y":120, "width":80, "height":80, "fill":"blue", "stroke":"gray", "stroke-width":2, "opacity":0.8},
+				{"x":80, "y":80, "width":80, "height":80, "fill":"green", "stroke":"gray", "stroke-width":2, "opacity":0.6},
+				{"x":120, "y":40, "width":80, "height":80, "fill":"yellow", "stroke":"gray", "stroke-width":2, "opacity":0.4},
+				{"x":160, "y":0, "width":80, "height":80, "fill":"trf", "stroke":"gray", "stroke-width":2, "opacity":0.2}];
+				 
+				 //Create the SVG Viewport
+				 var svgContainer = d3.select("body").append("svg")
+				                                      .attr("width",200)
+				                                      .attr("height",200);
+				
+				//Add circles to the svgContainer
+				var rectangles = svgContainer.selectAll("rect")
+				                           .data(rectData)
+				                           .enter()
+				                           .append("rect");
+				
+				//Add the circle attributes
+				var rectAttributes = rectangles
+				                       .attr("x", function (d) { return d.x; })
+				                       .attr("y", function (d) { return d.y; })
+									   .attr("width", function (d) { return d.width; })
+									   .attr("height", function (d) { return d.height; })
+									   .attr("opacity", function (d) { return d.opacity; })
+				                       .style("fill", function (d) { return d.fill; })
+									   .style("stroke", function (d) { return d.stroke; })
+									   .style("stroke-width", function (d) { return d.stroke-width; });
+			;
         </script>
 		<h1>Page Title</h1>
 		<p>This is a paragraph using simple html.</p>
