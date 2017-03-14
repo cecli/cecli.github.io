@@ -9,7 +9,6 @@
         <script type="text/javascript">
 		d3.select("body").append("p").text("New paragraph using javascript!");
 		var dataset = [ 5, 10, 15, 20, 25 ];
-		d3.select("body").selectAll("p").data(dataset).enter().append("p").text("New paragraph multiple!");
 		d3.select("body").selectAll("p").data(dataset).enter().append("p").text(function(d) { return d; });
         </script>
 		<h1>Page Title</h1>
