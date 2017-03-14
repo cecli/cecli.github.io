@@ -16,6 +16,13 @@
 			.text(function(d) {
 				return "I can count up to " + d;
 			});
+			.style("color", function(d) {
+				if (d > 15) {   //Threshold of 15
+					return "red";
+				} else {
+					return "black";
+				}
+			});
         </script>
 		<h1>Page Title</h1>
 		<p>This is a paragraph using simple html.</p>
