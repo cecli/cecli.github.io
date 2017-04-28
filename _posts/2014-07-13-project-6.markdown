@@ -1,10 +1,12 @@
 ---
 layout: default
-modal-id: test8
+modal-id: 6
 date: 2014-07-15
 img: submarine.png
 alt: image-alt
 project-date: May 2017
-description: This is a test description
+client: Test_client
+category: Test_category
+description: Test_description
 
 ---
