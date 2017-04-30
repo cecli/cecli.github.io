@@ -84,7 +84,7 @@
 										.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 									// Define the div for the tooltip
-									var div = d3.select("pickmediv").append("tree_distr_div")
+									var div = d3.select("pickmediv").append("svg")
 										.attr("class", "tooltip")
 										.style("opacity", 0);
 
@@ -235,7 +235,6 @@
 								</script>
 								<svg width="960" height="500"></svg>
 							</div>
-							<div id="pickmediv">
 						</html>
 						<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 						</div>
