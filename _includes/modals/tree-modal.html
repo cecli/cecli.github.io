@@ -62,7 +62,7 @@
 								<button id="05button" type="button"><p id="05data">Change to 2005 data</p></button>
 								<button id="15button" type="button"><p id="15data">Change to 2015 data</p></button>
 
-								<script type="text/javascript" src="https://d3js.org/d3-selection-multi.v1.min.js">
+								<script type="text/javascript" src="d3/d3.min.js">
 									var svg = d3.select("svg"),
 										margin = { top: 20, right: 20, bottom: 30, left: 40 },
 										width = +svg.attr("width") - margin.left - margin.right,
@@ -172,7 +172,7 @@
 											.text(function (d) { return d; });
 
 
-										d3.selectAll("#95button, #05button, #15button")
+										d3.selectAll("p")
 											.on("click", function () {
 												console.log("Button clicked")
 												var bttnID = d3.select(this).attr("id");
