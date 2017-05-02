@@ -58,9 +58,9 @@
 									<!-- What you are actually visualizing. Will change on click of buttons -->
 									You are now visualizing: 2015 Data
 								</h4>
-								<button type="button"><p id="95data">Change to 1995 data</p></button>
-								<button type="button"><p id="05data">Change to 2005 data</p></button>
-								<button type="button"><p id="15data">Change to 2015 data</p></button>
+								<button id="95button" type="button"><p id="95data">Change to 1995 data</p></button>
+								<button id="05button" type="button"><p id="05data">Change to 2005 data</p></button>
+								<button id="15button" type="button"><p id="15data">Change to 2015 data</p></button>
 
 								<script type="text/javascript" src="https://d3js.org/d3-selection-multi.v1.min.js">
 									var svg = d3.select("svg"),
@@ -172,7 +172,7 @@
 											.text(function (d) { return d; });
 
 
-										d3.selectAll("p")
+										d3.selectAll("#95button, #05button, #15button")
 											.on("click", function () {
 												console.log("Button clicked")
 												var bttnID = d3.select(this).attr("id");
