@@ -24,5 +24,191 @@
                 </a>
             </div>
         </div>
+        <div id="pickmediv">
+							<div id="tree_distr_div">
+								<h4 class="Description" id="SelectionYear" margin-left="100px">
+									<!-- What you are actually visualizing. Will change on click of buttons -->
+									You are now visualizing: 2015 Data
+								</h4>
+								<button id="95button" type="button"><p id="95data">Change to 1995 data</p></button>
+								<button id="05button" type="button"><p id="05data">Change to 2005 data</p></button>
+								<button id="15button" type="button"><p id="15data">Change to 2015 data</p></button>
+
+								<script type="text/javascript" src="https://d3js.org/d3-selection-multi.v1.min.js">
+									var svg = d3.select("svg"),
+										margin = { top: 20, right: 20, bottom: 30, left: 40 },
+										width = +svg.attr("width") - margin.left - margin.right,
+										height = +svg.attr("height") - margin.top - margin.bottom,
+										g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+									var x0 = d3.scaleBand()
+										.rangeRound([0, width])
+										.paddingInner(0.1);
+
+									var x1 = d3.scaleBand()
+										.padding(0.05);
+
+									var y = d3.scaleLinear()
+										.rangeRound([height, 0]);
+
+									var z = d3.scaleOrdinal()
+										.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+									// Define the div for the tooltip
+									var div = d3.select("#pickmediv").append("svg")
+										.attr("class", "tooltip")
+										.style("opacity", 0);
+
+									d3.csv("data.csv", function (d, i, columns) {
+										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
+										return d;
+									}, function (error, data) {
+										if (error) throw error;
+
+										var keys = data.columns.slice(1);
+
+										x0.domain(data.map(function (d) { return d.Tree; }));
+										x1.domain(keys).rangeRound([0, x0.bandwidth()]);
+										y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
+
+										g.append("g")
+											.selectAll("g")
+											.data(data)
+											.enter().append("g")
+											.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
+											.selectAll("rect")
+											.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
+											.enter().append("rect")
+											.attr("x", function (d) { return x1(d.key); })
+											.attr("y", function (d) { return y(d.value); })
+											.attr("width", x1.bandwidth())
+											.attr("height", function (d) { return height - y(d.value); })
+											.attr("fill", function (d) { return z(d.key); })
+											.on("mouseover", function (d) {
+												div.transition()
+													.duration(10)
+													.style("opacity", .9);
+												d3.select(this)
+													.style("opacity", 0.5)
+													.attr("stroke-width", "10px");
+
+												div.html("<b>" + d.key + "</b>" + "<br>" + d.value + " <i>" + d.trees + "</i> trees")
+													.style("left", (-250) + "px")
+													.style("top", (60) + "px");
+											})
+
+											.on("mouseout", function (d) {
+												div.transition()
+													.duration(200)
+													.style("opacity", 0);
+												d3.select(this)
+													.style("opacity", .9);
+											});
+
+										g.append("g")
+											.attr("class", "axis")
+											.attr("transform", "translate(0," + height + ")")
+											.call(d3.axisBottom(x0));
+
+										g.append("g")
+											.attr("class", "axis")
+											.call(d3.axisLeft(y).ticks(null, "s"))
+											.append("text")
+											.attr("x", 2)
+											.attr("y", y(y.ticks().pop()) + 0.5)
+											.attr("dy", "0.32em")
+											.attr("fill", "#000")
+											.attr("font-weight", "bold")
+											.attr("text-anchor", "start")
+											.text("Amount of trees");
+
+										var legend = g.append("g")
+											.attr("font-family", "sans-serif")
+											.attr("font-size", 10)
+											.attr("text-anchor", "end")
+											.selectAll("g")
+											.data(keys.slice())
+											.enter().append("g")
+											.attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
+
+										legend.append("rect")
+											.attr("x", width - 19)
+											.attr("width", 19)
+											.attr("height", 19)
+											.attr("fill", z);
+
+										legend.append("text")
+											.attr("x", width - 24)
+											.attr("y", 9.5)
+											.attr("dy", "0.32em")
+											.text(function (d) { return d; });
+
+
+										d3.selectAll("p")
+											.on("click", function () {
+												console.log("Button clicked")
+												var bttnID = d3.select(this).attr("id");
+												var des = document.getElementById("SelectionYear")
+
+												//Handle buttons for the different years
+												if (bttnID == "95data") {
+													//1995 data
+													data_file = "data1995.csv"
+													SelectionYear.innerHTML = "1995 data"
+													//changing the text saying what we are currently visualizing
+													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML
+												}
+												else if (bttnID == "05data") {
+													//2005 data
+													data_file = "data2005.csv"
+													SelectionYear.innerHTML = "2005 data"
+													//changing the text saying what we are currently visualizing
+													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
+												}
+												else if (bttnID == "15data") {
+													//2015 data
+													data_file = "data.csv"
+													SelectionYear.innerHTML = "2015 data"
+													//changing the text saying what we are currently visualizing
+													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
+
+												};
+
+												d3.csv(data_file, function (d, i, columns) {
+													for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
+													return d;
+												}, function (error, data2) {
+													if (error) throw error;
+
+													var keys = data2.columns.slice(1);
+
+													x0.domain(data2.map(function (d) { return d.Tree; }));
+													x1.domain(keys).rangeRound([0, x0.bandwidth()]);
+													y.domain([0, d3.max(data2, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
+
+													g.selectAll("g")
+														.data(data2)
+														.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
+
+														.selectAll("rect")
+														.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key] }; }); })
+														.transition()
+														.duration(1000)
+														.attr("x", function (d) { return x1(d.key); })
+														.attr("y", function (d) { return y(d.value); })
+														.attr("width", x1.bandwidth())
+														.attr("height", function (d) { return height - y(d.value); })
+														.attr("fill", function (d) { return z(d.key); });
+
+												});
+											});
+									});
+								</script>
+								<svg width="960" height="500"></svg>
+							</div>
+
+						</html>
+						<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+						</div>
     </div>
 </section>
