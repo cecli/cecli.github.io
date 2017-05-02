@@ -1,5 +1,80 @@
 <body>
-	<script type="text/javascript" src="https://d3js.org/d3-selection-multi.v1.min.js">
+	<div class="modal-modal modal fade" id="modal-tree" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-content">
+			<div class="close-modal" data-dismiss="modal">
+				<div class="lr">
+					<div class="rl">
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2">
+						<div class="modal-body">
+							<h2>Distribution of trees</h2>
+							<hr class="star-primary">
+							<p>Here you can see the how the top 5 tree species in NYC from 2015 is distributed in different years and for each of
+								the 5 boroughs.
+								<br><br>Click the buttons below to change view between years. </p>
+							<html lang="en">
+
+							<head>
+								<meta charset="utf-8">
+								<title>Tree Distribution</title>
+								<script type="text/javascript" src="d3/d3.js"></script>
+								<style type="text/css">
+									div.tooltip {
+										box-sizing: border-box;
+										display: inline;
+										font-size: 20px;
+										width: 100%;
+										z-index: -1;
+										line-height: 1;
+										color: rgba(0, 0, 0, 0.8);
+										content: "\25BC";
+										position: absolute;
+										text-align: center;
+									}
+									
+									#tooltip {
+										position: absolute;
+										width: 200px;
+										height: auto;
+										padding: 10px;
+										background-color: white;
+										-webkit-border-radius: 10px;
+										-moz-border-radius: 10px;
+										border-radius: 10px;
+										-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+										-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+										box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+										pointer-events: none;
+									}
+								</style>
+							</head>
+
+							<div id="pickmediv">
+								<div id="tree_distr_div">
+									<h4 class="Description" id="SelectionYear" margin-left="100px">
+										<!-- What you are actually visualizing. Will change on click of buttons -->
+										You are now visualizing: 2015 Data
+									</h4>
+									<button id="95button" type="button"><p id="95data">Change to 1995 data</p></button>
+									<button id="05button" type="button"><p id="05data">Change to 2005 data</p></button>
+									<button id="15button" type="button"><p id="15data">Change to 2015 data</p></button>
+
+									<svg width="960" height="500"></svg>
+								</div>
+
+							</html>
+							<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="https://d3js.org/d3-selection-multi.v1.min.js">
 		var svg = d3.select("svg"),
 			margin = { top: 20, right: 20, bottom: 30, left: 40 },
 			width = +svg.attr("width") - margin.left - margin.right,
@@ -169,80 +244,4 @@
 				});
 		});
 	</script>
-
-	<div class="modal-modal modal fade" id="modal-tree" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-content">
-			<div class="close-modal" data-dismiss="modal">
-				<div class="lr">
-					<div class="rl">
-					</div>
-				</div>
-			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 col-lg-offset-2">
-						<div class="modal-body">
-							<h2>Distribution of trees</h2>
-							<hr class="star-primary">
-							<p>Here you can see the how the top 5 tree species in NYC from 2015 is distributed in different years and for each of
-								the 5 boroughs.
-								<br><br>Click the buttons below to change view between years. </p>
-							<html lang="en">
-
-							<head>
-								<meta charset="utf-8">
-								<title>Tree Distribution</title>
-								<script type="text/javascript" src="d3/d3.js"></script>
-								<style type="text/css">
-									div.tooltip {
-										box-sizing: border-box;
-										display: inline;
-										font-size: 20px;
-										width: 100%;
-										z-index: -1;
-										line-height: 1;
-										color: rgba(0, 0, 0, 0.8);
-										content: "\25BC";
-										position: absolute;
-										text-align: center;
-									}
-									
-									#tooltip {
-										position: absolute;
-										width: 200px;
-										height: auto;
-										padding: 10px;
-										background-color: white;
-										-webkit-border-radius: 10px;
-										-moz-border-radius: 10px;
-										border-radius: 10px;
-										-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-										-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-										box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-										pointer-events: none;
-									}
-								</style>
-							</head>
-
-							<div id="pickmediv">
-								<div id="tree_distr_div">
-									<h4 class="Description" id="SelectionYear" margin-left="100px">
-										<!-- What you are actually visualizing. Will change on click of buttons -->
-										You are now visualizing: 2015 Data
-									</h4>
-									<button id="95button" type="button"><p id="95data">Change to 1995 data</p></button>
-									<button id="05button" type="button"><p id="05data">Change to 2005 data</p></button>
-									<button id="15button" type="button"><p id="15data">Change to 2015 data</p></button>
-
-									<svg width="960" height="500"></svg>
-								</div>
-
-							</html>
-							<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 </body>
