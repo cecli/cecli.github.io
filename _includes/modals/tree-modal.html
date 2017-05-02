@@ -6,9 +6,9 @@
 				</div>
 			</div>
 		</div>
-		<!--<div class="container">
+		<div class="container">
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">-->
+				<div class="col-lg-8 col-lg-offset-2">
 					<div class="modal-body">
 						<h2>Distribution of trees</h2>
 						<hr class="star-primary">
@@ -63,6 +63,7 @@
 								<button id="15button" type="button"><p id="15data">Change to 2015 data</p></button>
 
 								<script type="text/javascript" src="https://d3js.org/d3-selection-multi.v1.min.js">
+								$(document).ready(function(){
 									var svg = d3.select("svg"),
 										margin = { top: 20, right: 20, bottom: 30, left: 40 },
 										width = +svg.attr("width") - margin.left - margin.right,
@@ -231,6 +232,8 @@
 												});
 											});
 									});
+								});
+									
 								</script>
 								<svg width="960" height="500"></svg>
 							</div>
@@ -238,8 +241,8 @@
 						</html>
 						<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 						</div>
-					<!--</div>
+					</div>
 				</div>
-			</div>-->
+			</div>
 		</div>
 	</div>
