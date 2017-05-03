@@ -91,6 +91,7 @@
 									// Define the div for the tooltip
 									var div = d3.select("#inner_hist_div").append("div")
 										.attr("class", "tooltip")
+										.style("z-index", 10000)
 										.style("opacity", 0);
 
 									d3.csv("data.csv", function (d, i, columns) {
