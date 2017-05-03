@@ -23,7 +23,7 @@
 							<script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
 							<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 							<style type="text/css">
-								/*div.tooltip {
+								div.tooltip {
 									box-sizing: border-box;
 									display: inline;
 									font-size: 20px;
@@ -34,7 +34,7 @@
 									content: "\25BC";
 									position: relative;
 									text-align: center;
-								}*/
+								}
 								
 								#tooltip {
 									position: relative;
@@ -91,7 +91,8 @@
 									// Define the div for the tooltip
 									var div = d3.select("body").append("div")
 										.attr("class", "tooltip")
-										.style("opacity", 0);
+										.style("opacity", 0)
+										.style("position:relative");
 
 									d3.csv("data.csv", function (d, i, columns) {
 										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
