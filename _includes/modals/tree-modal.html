@@ -177,7 +177,6 @@
 
 										d3.selectAll("p")
 											.on("click", function () {
-												console.log("Button clicked")
 												var bttnID = d3.select(this).attr("id");
 												var des = document.getElementById("SelectionYear")
 
@@ -212,7 +211,6 @@
 											});
 
 										function update_hist(data_file) {
-											console.log("update hist called")
 											d3.csv(data_file, function (d, i, columns) {
 												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 												return d;
