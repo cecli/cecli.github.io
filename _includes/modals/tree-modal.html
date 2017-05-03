@@ -55,7 +55,7 @@
 						</head>
 
 						<div id="histogram_div">
-							<body id="histogram_body">
+							<body>
 								<h2>Tree distribution in NYC </h2>
 								<p>Click a button to see the how the top 5 tree species in NYC from 2015 is distributed in different years and for each
 									of the 5 boroughs.</p>
@@ -89,7 +89,7 @@
 										.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 									// Define the div for the tooltip
-									var div = d3.select("#histogram_body").append("div")
+									var div = d3.select("body").append("div")
 										.attr("class", "tooltip")
 										.style("opacity", 0);
 
