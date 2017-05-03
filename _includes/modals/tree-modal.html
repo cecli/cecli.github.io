@@ -55,7 +55,7 @@
 						</head>
 
 						<div id="histogram_div">
-							<body id="histogram_body">
+							<body>
 								<h2>Tree distribution in NYC </h2>
 								<p>Click a button to see the how the top 5 tree species in NYC from 2015 is distributed in different years and for each
 									of the 5 boroughs.</p>
@@ -91,8 +91,7 @@
 									// Define the div for the tooltip
 									var div = d3.select("body").append("div")
 										.attr("class", "tooltip")
-										.style("opacity", 0)
-										.style("position:relative");
+										.style("opacity", 0);
 
 									d3.csv("data.csv", function (d, i, columns) {
 										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
