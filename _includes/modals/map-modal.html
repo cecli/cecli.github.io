@@ -137,17 +137,16 @@
 											function updateMap(dat) {
 												console.log("updateMap")
 												var animate = function() {
+													console.log("animate")													   
+													d3.select(this).transition().duration(1000)
+														.attr("r", 7).each("end", function () {
+													d3.select(this).transition().duration(1000)
+														.attr("r", 3).each("end", animate)});
 													console.log("animate")
-													svg_map.selectAll("circle").remove()
-														   
-													// d3.select(this).transition().duration(1000)
-													// 	.attr("r", 7).each("end", function () {
-													// d3.select(this).transition().duration(1000)
-													// 	.attr("r", 3).each("end", animate)});
-													// console.log("animate")
+											}
 
 												svg_map.select("circle")
-													   .data(dat)
+											     	   .data(dat)
 													   .attr("cx", function(d) {
 														   return projection([d.lon, d.lat])[0];
 													   })
@@ -157,8 +156,6 @@
 													   .attr("r", 5).each("end", animate)
 													   .style("fill", "red")
 													   .style("opacity", 0.9)
-											}
-
 
 											}																					
 										});
