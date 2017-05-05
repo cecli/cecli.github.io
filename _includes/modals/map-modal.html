@@ -21,21 +21,19 @@
 							<title>D3: Setting path fills</title>
 							<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
 							<style type="text/css">
-
 								.background {
-								fill: #eee;
-								pointer-events: all;
+									fill: #eee;
+									pointer-events: all;
 								}
-
+								
 								.map-layer {
-								fill: #fff;
-								stroke: #aaa;
+									fill: #fff;
+									stroke: #aaa;
 								}
-
-								.effect-layer{
-								pointer-events:none;
+								
+								.effect-layer {
+									pointer-events: none;
 								}
-
 							</style>
 						</head>
 						<div id="map_div">
@@ -44,57 +42,62 @@
 								var w = 1000;
 								var h = 700;
 
-								d3.csv("data/knn/fairknn.csv", function(data){
-									data.forEach(function(d){
-										d.lat = +d.lat;
-										d.lon = +d.lon;
+								d3.csv("data/knn/fairknn.csv", function (data) {
+									return {
+										lat: data.lat,
+										lon: data.lon
+									};
+
+									//Define map projection
+									var projection = d3.geo.mercator()
+										.center([-73.805941, 40.712784])
+										.translate([w / 2, h / 2])
+										.scale([55000]);
+
+									//Define path generator
+									var path = d3.geo.path()
+										.projection(projection);
+
+									//Create SVG element
+									var svg_map = d3.select("#map_div")
+										.append("svg")
+										.attr("width", w)
+										.attr("height", h)
+										.style("position", "relative")
+										.style("width", "100%")
+
+									svg_map.append('rect')
+										.attr("class", "background")
+										.attr("width", "1000")
+										.attr("height", "700")
+
+									//Load in GeoJSON data
+									d3.json("data/geojson/boroughs.geojson", function (json) {
+
+										for (var i = 0; i < data.length; i++) {
+
+											var borough = data[i].BoroName;
+
+											console.log(borough)
+
+										}
+
+										//Bind data and create one path per GeoJSON feature
+										svg_map.selectAll("path")
+											.data(json.features)
+											.enter()
+											.append("path")
+											.attr("d", path)
+											.style("fill", "steelblue")
+											.on("mouseover", function (d) {
+												console.log("mouseoever")
+
+											});
 									});
-									console.log(data[0])
-
-									
-								});
-
-								//Define map projection
-								var projection = d3.geo.mercator()
-									.center([-73.805941, 40.712784])
-									.translate([w / 2, h / 2])
-									.scale([55000]);
-
-								//Define path generator
-								var path = d3.geo.path()
-									.projection(projection);
-
-								//Create SVG element
-								var svg_map = d3.select("#map_div")
-									.append("svg")
-									.attr("width", w)
-									.attr("height", h)
-									.style("position", "relative")
-									.style("width", "100%")	
-
-								svg_map.append('rect')
-									   .attr("class", "background")	
-									   .attr("width", "1000")
-									   .attr("height", "700")
-
-								
-
-								//Load in GeoJSON data
-								d3.json("data/geojson/boroughs.geojson", function (json) {
-									//Bind data and create one path per GeoJSON feature
-									svg_map.selectAll("path")
-										.data(json.features)
-										.enter()
-										.append("path")
-										.attr("d", path)
-										.style("fill", "steelblue")
-										.on("mouseover", function(d){
-											console.log("mouseoever")
-	
-										});
 								});
 							</script>
 						</div>
+
 						</html>
 
 						<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
