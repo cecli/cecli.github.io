@@ -58,8 +58,13 @@
 										.attr("d", path)
 										.attr("fill", function(d){
 											return d.properties.stroke;
+										})
+										.attr("stroke", function(d) {
+											return d.properties.stroke
+										})
+										.attr("stroke-width", function(d) {
+											return d.properties['stroke-width']
 										});
-
 								});
 							</script>
 						</div>
