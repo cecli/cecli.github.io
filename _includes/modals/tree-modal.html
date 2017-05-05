@@ -32,12 +32,12 @@
 									line-height: 1;
 									color: rgba(0, 0, 0, 0.8);
 									content: "\25BC";
-									position: relative;
+									position: absolute;
 									text-align: center;
 								}
 								
 								#tooltip {
-									position: relative;
+									position: absolute;
 									width: 200px;
 									height: auto;
 									padding: 10px;
@@ -51,11 +51,11 @@
 									pointer-events: none;
 								}
 							</style>
-							<svg width="960" height="500"></svg>
+							<svg id="hist_svg" width="960" height="500" style="position:relative; left:-90px; z-index: 10000"></svg>
 						</head>
 
 						<div id="histogram_div">
-							<body>
+							<div id="inner_hist_div"y>
 								<h2>Tree distribution in NYC </h2>
 								<p>Click a button to see the how the top 5 tree species in NYC from 2015 is distributed in different years and for each
 									of the 5 boroughs.</p>
@@ -89,8 +89,9 @@
 										.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 									// Define the div for the tooltip
-									var div = d3.select("body").append("div")
+									var div = d3.select("#inner_hist_div").append("div")
 										.attr("class", "tooltip")
+										.style("z-index", 10000)
 										.style("opacity", 0);
 
 									d3.csv("data.csv", function (d, i, columns) {
@@ -125,12 +126,10 @@
 												d3.select(this)
 													.style("opacity", 0.5)
 													.attr("stroke-width", "10px");
-												//div.html("test");
 												div.html("<b>" + d.key + "</b>" + "<br>" + d.value + " <i>" + d.trees + "</i> trees")
-													.style("left", (-250) + "px")
-													.style("top", (60) + "px");
+													.style("left", (0) + "px")
+													.style("top", (290) + "px");
 											})
-											//what happens on mouseout, the text regarding crime count will disappear            
 											.on("mouseout", function (d) {
 												div.transition()
 													.duration(200)
@@ -177,10 +176,8 @@
 											.attr("dy", "0.32em")
 											.text(function (d) { return d; });
 
-
 										d3.selectAll("p")
 											.on("click", function () {
-												console.log("Button clicked")
 												var bttnID = d3.select(this).attr("id");
 												var des = document.getElementById("SelectionYear")
 
@@ -215,7 +212,6 @@
 											});
 
 										function update_hist(data_file) {
-											console.log("update hist called")
 											d3.csv(data_file, function (d, i, columns) {
 												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 												return d;
@@ -232,7 +228,8 @@
 													.data(data)
 													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
 													.selectAll("rect")
-													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key] }; }); })
+													//.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key] }; }); })
+													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
 													.transition()
 													.duration(1000)
 													.attr("x", function (d) { return x1(d.key); })
@@ -244,7 +241,7 @@
 										}
 									});
 								</script>
-							</body>
+							</div>
 						</div>
 
 						</html>
