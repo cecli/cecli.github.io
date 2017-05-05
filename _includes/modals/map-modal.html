@@ -42,7 +42,7 @@
 								var w = 1000;
 								var h = 700;
 
-								d3.csv("data/knn/fairknn.csv", function (data) {
+								d3.csv("/data/knn/fairknn.csv", function (data) {
 									return {
 										lat: data.lat,
 										lon: data.lon
@@ -74,7 +74,6 @@
 									//Load in GeoJSON data
 									d3.json("data/geojson/boroughs.geojson", function (json) {
 
-										console.log(data[0])
 										for (var i = 0; i < data.length; i++) {
 
 											var borough = data[i].BoroName;
