@@ -53,12 +53,14 @@
 												.attr("height", h)
 												.style("position", "relative")
 												.style("width", "100%")
-
+											
+											//Adding background to svg
 											svg_map.append('rect')
 												.attr("class", "background")
 												.attr("width", "1000")
 												.attr("height", "700")
 
+											//Adding more dots than you can count
 											svg_map.selectAll("circle")
 												.data(data1)
 												.enter()
@@ -71,7 +73,7 @@
 												})
 												.attr("r", 5)
 												.style("fill", "orange")
-												.style("opacity", 0.50);
+												.style("opacity", 0.10);
 											svg_map.selectAll("circle")
 												.data(data2)
 												.enter()
@@ -84,7 +86,7 @@
 												})
 												.attr("r", 5)
 												.style("fill", "red")
-												.style("opacity", 0.50);
+												.style("opacity", 0.10);
 											svg_map.selectAll("circle")
 												.data(data3)
 												.enter()
@@ -97,7 +99,7 @@
 												})
 												.attr("r", 5)
 												.style("fill", "green")
-												.style("opacity", 0.50);
+												.style("opacity", 0.10);
 
 											//Load in GeoJSON data
 											d3.json("data/geojson/boroughs.geojson", function (json) {
