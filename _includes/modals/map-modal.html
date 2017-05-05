@@ -10,6 +10,10 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<div class="modal-body">
+						<h2>New York City neighbourhoods</h2>
+						<hr class="star-primary">
+						<p>Here you can see....
+							<br><br>Hover over the neighbourhoods in the map to see additional information.</p>
 						<html lang="en">
 
 						<head>
@@ -30,7 +34,7 @@
 								var projection = d3.geo.mercator()
 									.center([-73.9741874, 40.7711329])
 									.translate([w / 2, h / 2])
-									.scale([18000]);
+									.scale([36000]);
 
 								//Define path generator
 								var path = d3.geo.path()
@@ -52,7 +56,6 @@
 										.append("path")
 										.attr("d", path)
 										.style("fill", "steelblue");
-									console.log()
 
 								});
 							</script>
