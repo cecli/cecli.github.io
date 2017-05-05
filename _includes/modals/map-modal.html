@@ -174,7 +174,7 @@
 													   .attr("cy", function(d) {
 														   return projection([d.lon, d.lat])[1];
 													   })
-													   .attr("r", 5).each("end", updateMap)
+													   .attr("r", 5).on("end", updateMap)
 													   .style("fill", "red")
 													   .style("opacity", 0.9)
 											}																					
