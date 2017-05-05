@@ -152,18 +152,18 @@
 											// }
 
 												svg_map.select("#data2dots").selectAll("circle").remove()
-												// svg_map.select("#data2dots").selectAll("circle")
-												// 		.data(data2)
-												// 		.transition().duration(1000)
-												// 		.attr("cx", function(d) {
-												// 			return projection([d.lon, d.lat])[0];
-												// 		})
-												// 		.attr("cy", function(d) {
-												// 			return projection([d.lon, d.lat])[1];
-												// 		})
-												// 		.attr("r", 5).each("end", updateMap)
-												// 		.style("fill", "red")														
-												// 		.style("opacity", 0.9);
+												svg_map.select("#data2dots").selectAll("circle")
+														.data(data2)
+														.transition().duration(1000)
+														.attr("cx", function(d) {
+															return projection([d.lon, d.lat])[0];
+														})
+														.attr("cy", function(d) {
+															return projection([d.lon, d.lat])[1];
+														})
+														.attr("r", 5).each("end", updateMap)
+														.style("fill", "red")														
+														.style("opacity", 0.9);
 
 												// svg_map.select("#data2dots").selectAll("circle").remove()	
 												// svg_map.select("#data2dots").selectAll("circle")
