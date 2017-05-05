@@ -137,7 +137,7 @@
 															.data(data2)
 															.enter()
 															.append("circle")
-															.transition().duration(1500)
+															.transition().duration(1000)
 															.attr("cx", function (d) {
 																return projection([d.lon, d.lat])[0];
 															})
@@ -151,12 +151,12 @@
 														//updateMap(data2);														
 														console.log("update2")
 
-														svg_map.selectAll("circle").remove()
+														//svg_map.selectAll("circle").remove()
 														svg_map.selectAll("circle")
 															.data(data1)
 															.enter()
 															.append("circle")
-															.transition().duration(1500)
+															.transition().duration(1000)
 															.attr("cx", function (d) {
 																return projection([d.lon, d.lat])[0];
 															})
@@ -171,12 +171,12 @@
 														//updateMap(data3);
 														console.log("update3")
 
-														svg_map.selectAll("circle").remove()
+														//svg_map.selectAll("circle").remove()
 														svg_map.selectAll("circle")
 															.data(data3)
 															.enter()
 															.append("circle")
-															.transition().duration(1500)
+															.transition().duration(1000)
 															.attr("cx", function (d) {
 																return projection([d.lon, d.lat])[0];
 															})
