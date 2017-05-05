@@ -31,66 +31,65 @@
 							<script type="text/javascript">
 								//Width and height
 								var w = 1000;
-								var h = 700;								
+								var h = 700;
 
-								d3.csv("/data/knn/fairknn.csv", function (data) {
-									// data.forEach(function(d) {
-									// 	d.lat = +d.lat,
-									// 	d.lon = +d.lon
-									// });			
+								d3.csv("/data/knn/fairknn.csv", function (data1) {
+									d3.csv("/data/knn/poorknn.csv", function (data2) {
+										d3.csv("/data/knn/goodknn.csv", function (data3) {
+											//Define map projection
+											var projection = d3.geo.mercator()
+												.center([-73.805941, 40.712784])
+												.translate([w / 2, h / 2])
+												.scale([55000]);
 
-									//Load in GeoJSON data
-									d3.json("data/geojson/boroughs.geojson", function (json) {										
+											//Define path generator
+											var path = d3.geo.path()
+												.projection(projection);
 
-										//Bind data and create one path per GeoJSON feature
-										svg_map.selectAll("path")
-											.data(json.features)
-											.enter()
-											.append("path")
-											.attr("d", path)
-											.style("fill", "steelblue")
-											.on("mouseover", function (d) {
-												console.log("mouseoever")
+											//Create SVG element
+											var svg_map = d3.select("#map_div")
+												.append("svg")
+												.attr("width", w)
+												.attr("height", h)
+												.style("position", "relative")
+												.style("width", "100%")
 
+											svg_map.append('rect')
+												.attr("class", "background")
+												.attr("width", "1000")
+												.attr("height", "700")
+
+											svg_map.selectAll("circle")
+												.data(data)
+												.enter()
+												.append("circle")
+												.attr("cx", function (d) {
+													return projection([d.lon, d.lat])[0];
+												})
+												.attr("cy", function (d) {
+													return projection([d.lon, d.lat])[1];
+												})
+												.attr("r", 5)
+												.style("fill", "orange")
+												.style("opacity", 0.75);
+
+											//Load in GeoJSON data
+											d3.json("data/geojson/boroughs.geojson", function (json) {
+
+												//Bind data and create one path per GeoJSON feature
+												svg_map.selectAll("path")
+													.data(json.features)
+													.enter()
+													.append("path")
+													.attr("d", path)
+													.style("fill", "steelblue")
+													.on("mouseover", function (d) {
+														console.log("mouseoever")
+
+													});
 											});
-									});							 
-
-									//Define map projection
-									var projection = d3.geo.mercator()
-										.center([-73.805941, 40.712784])
-										.translate([w / 2, h / 2])
-										.scale([55000]);
-
-									//Define path generator
-									var path = d3.geo.path()
-										.projection(projection);
-
-									//Create SVG element
-									var svg_map = d3.select("#map_div")
-										.append("svg")
-										.attr("width", w)
-										.attr("height", h)
-										.style("position", "relative")
-										.style("width", "100%")
-
-									svg_map.append('rect')
-										.attr("class", "background")
-										.attr("width", "1000")
-										.attr("height", "700")
-
-									svg_map.selectAll("circle")
-										.data(data)
-										.enter()
-										.append("circle")
-										.attr("cx", function(d) {
-												return projection([d.lon, d.lat])[0];
-										})
-										.attr("cy", function(d) {
-												return projection([d.lon, d.lat])[1];
-										})
-										.attr("r", 5)
-										.style("fill", "orange")
-										.style("opacity", 0.75);									
+										});
+									});
 								});
 							</script>
 						</div>
