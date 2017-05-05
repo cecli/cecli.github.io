@@ -47,6 +47,8 @@
 									.attr("height", h)
 									.style("position", "relative");
 
+								svg_map.append("g").attr("id", "nodes_map")
+
 								//Load in GeoJSON data
 								d3.json("data/geojson/pediacitiesnycneighborhoods.geojson", function (json) {
 
