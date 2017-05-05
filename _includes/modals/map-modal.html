@@ -97,6 +97,7 @@
 													.data(data1)
 													.enter()
 													.append("circle")
+													.attr("id", "data1dots")
 													.attr("cx", function (d) {
 														return projection([d.lon, d.lat])[0];
 													})
@@ -110,6 +111,7 @@
 													.data(data2)
 													.enter()
 													.append("circle")
+													.attr("id", "data2dots")
 													.attr("cx", function (d) {
 														return projection([d.lon, d.lat])[0];
 													})
@@ -123,6 +125,7 @@
 													.data(data3)
 													.enter()
 													.append("circle")
+													.attr("id", "data3dots")
 													.attr("cx", function (d) {
 														return projection([d.lon, d.lat])[0];
 													})
@@ -144,6 +147,7 @@
 														.attr("r", 3).on("end", animate));
 													console.log("animate")
 											}
+												svg_map.selectAll("data1dots").remove()
 
 												svg_map.select("circle")
 											     	   .data(dat)
@@ -156,7 +160,6 @@
 													   .attr("r", 5).on("end", animate)
 													   .style("fill", "red")
 													   .style("opacity", 0.9)
-
 											}																					
 										});
 									});
