@@ -71,9 +71,9 @@
 												.attr("cy", function (d) {
 													return projection([d.lon, d.lat])[1];
 												})
-												.attr("r", 5)
+												.attr("r", 1)
 												.style("fill", "orange")
-												.style("opacity", 0.10);
+												.style("opacity", 0.75);
 											svg_map.selectAll("circle")
 												.data(data2)
 												.enter()
@@ -84,9 +84,9 @@
 												.attr("cy", function (d) {
 													return projection([d.lon, d.lat])[1];
 												})
-												.attr("r", 5)
+												.attr("r", 1)
 												.style("fill", "red")
-												.style("opacity", 0.10);
+												.style("opacity", 0.75);
 											svg_map.selectAll("circle")
 												.data(data3)
 												.enter()
@@ -97,25 +97,9 @@
 												.attr("cy", function (d) {
 													return projection([d.lon, d.lat])[1];
 												})
-												.attr("r", 5)
+												.attr("r", 1)
 												.style("fill", "green")
-												.style("opacity", 0.10);
-
-											//Load in GeoJSON data
-											d3.json("data/geojson/boroughs.geojson", function (json) {
-
-												//Bind data and create one path per GeoJSON feature
-												svg_map.selectAll("path")
-													.data(json.features)
-													.enter()
-													.append("path")
-													.attr("d", path)
-													.style("fill", "steelblue")
-													.on("mouseover", function (d) {
-														console.log("mouseoever")
-
-													});
-											});
+												.style("opacity", 0.75);											
 										});
 									});
 								});
