@@ -147,7 +147,8 @@
 														.attr("r", 3).on("end", animate));
 													console.log("animate")
 											}
-												svg_map.selectAll("data1dots").remove()
+												svg_map.select("#data1dots").selectAll("circle")
+													   .remove()
 
 												svg_map.select("circle")
 											     	   .data(dat)
