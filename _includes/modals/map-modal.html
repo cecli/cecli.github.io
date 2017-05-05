@@ -84,15 +84,63 @@
 												var inter = setInterval(function() {
 													i++;
 													if (i == 1) {
-														updateMap(data1);
+														//updateMap(data1);
 														console.log("update1")
+
+														svg_map.selectAll("circle").remove()
+														svg_map.selectAll("circle")
+															.data(data1)
+															.enter()
+															.append("circle")
+															.transition().duration(1500)
+															.attr("cx", function (d) {
+																return projection([d.lon, d.lat])[0];
+															})
+															.attr("cy", function (d) {
+																return projection([d.lon, d.lat])[1];
+															})
+															.attr("r", 1.0)
+															.style("fill", "orange")
+															.style("opacity", 0.9);
 													} else if (i == 2) {
-														updateMap(data2);
+														//updateMap(data2);														
 														console.log("update2")
+
+														svg_map.selectAll("circle").remove()
+														svg_map.selectAll("circle")
+															.data(data2)
+															.enter()
+															.append("circle")
+															.transition().duration(1500)
+															.attr("cx", function (d) {
+																return projection([d.lon, d.lat])[0];
+															})
+															.attr("cy", function (d) {
+																return projection([d.lon, d.lat])[1];
+															})
+															.attr("r", 1.0)
+															.style("fill", "green")
+															.style("opacity", 0.9);
 													} else if (i == 3) {
 														i = 0;
-														updateMap(data3);
+														//updateMap(data3);
 														console.log("update3")
+
+														svg_map.selectAll("circle").remove()
+														svg_map.selectAll("circle")
+															.data(data3)
+															.enter()
+															.append("circle")
+															.transition().duration(1500)
+															.attr("cx", function (d) {
+																return projection([d.lon, d.lat])[0];
+															})
+															.attr("cy", function (d) {
+																return projection([d.lon, d.lat])[1];
+															})
+															.attr("r", 1.0)
+															.style("fill", "red")
+															.style("opacity", 0.9);
 													}
 												}, 4000);
 											});
@@ -151,21 +199,21 @@
 											// 			.attr("r", 3).each("end", animate)});																								
 											// }
 
-												svg_map.selectAll("circle").remove()
-												svg_map.selectAll("circle")
-													.data(dat)
-													.enter()
-													.append("circle")
-													.transition().duration(1500)
-													.attr("cx", function (d) {
-														return projection([d.lon, d.lat])[0];
-													})
-													.attr("cy", function (d) {
-														return projection([d.lon, d.lat])[1];
-													})
-													.attr("r", 1.5)
-													.style("fill", "red")
-													.style("opacity", 0.9);
+												// svg_map.selectAll("circle").remove()
+												// svg_map.selectAll("circle")
+												// 	.data(dat)
+												// 	.enter()
+												// 	.append("circle")
+												// 	.transition().duration(1500)
+												// 	.attr("cx", function (d) {
+												// 		return projection([d.lon, d.lat])[0];
+												// 	})
+												// 	.attr("cy", function (d) {
+												// 		return projection([d.lon, d.lat])[1];
+												// 	})
+												// 	.attr("r", 1.5)
+												// 	.style("fill", "red")
+												// 	.style("opacity", 0.9);
 
 												// svg_map.select("#data2dots").selectAll("circle").remove()	
 												// svg_map.select("#data2dots").selectAll("circle")
