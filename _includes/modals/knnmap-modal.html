@@ -58,7 +58,7 @@
 
 						<h4 class="Description" id="KnnSelection" margin-left="100px">
 							<!-- What you are actually visualizing. Will change on click of buttons -->
-							You are now visualizing: Poor trees
+							You are now visualizing: Good trees
 						</h4>
 						<button type="button"><p id="poordata">Show poor</p></button>
 						<button type="button"><p id="fairdata">Show fair</p></button>
@@ -156,7 +156,6 @@
 																.attr("r", 1.2)
 																.style("fill", "red")
 																.style("opacity", 0.9);
-															SelectionYear.innerHTML = "Poor trees"
 															//changing the text saying what we are currently visualizing
 															document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
 														}
@@ -176,7 +175,6 @@
 																.attr("r", 1.2)
 																.style("fill", "blue")
 																.style("opacity", 0.9);
-															SelectionYear.innerHTML = "Fair trees"
 															//changing the text saying what we are currently visualizing
 															document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
 														}
@@ -196,7 +194,6 @@
 																.attr("r", 1.2)
 																.style("fill", "green")
 																.style("opacity", 0.9);
-															SelectionYear.innerHTML = "Good trees"
 															//changing the text saying what we are currently visualizing
 															document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
 														};
