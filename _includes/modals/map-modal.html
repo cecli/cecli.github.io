@@ -89,9 +89,9 @@
 													.attr("cy", function (d) {
 														return projection([d.lon, d.lat])[1];
 													})
-													.attr("r", 1)
+													.attr("r", 1.5)
 													.style("fill", "orange")
-													.style("opacity", 0.75);
+													.style("opacity", 0.9);
 												svg_map.selectAll("circle")
 													.data(data2)
 													.enter()
@@ -102,9 +102,9 @@
 													.attr("cy", function (d) {
 														return projection([d.lon, d.lat])[1];
 													})
-													.attr("r", 1)
+													.attr("r", 1.5)
 													.style("fill", "red")
-													.style("opacity", 0.75);
+													.style("opacity", 0.9);
 												svg_map.selectAll("circle")
 													.data(data3)
 													.enter()
@@ -115,9 +115,9 @@
 													.attr("cy", function (d) {
 														return projection([d.lon, d.lat])[1];
 													})
-													.attr("r", 1)
+													.attr("r", 1.5)
 													.style("fill", "green")
-													.style("opacity", 0.75);
+													.style("opacity", 0.9);
 											}																						
 										});
 									});
