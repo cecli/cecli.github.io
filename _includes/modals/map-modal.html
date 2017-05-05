@@ -21,7 +21,21 @@
 							<title>D3: Setting path fills</title>
 							<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
 							<style type="text/css">
-								/* No style rules here yet */
+
+								.background {
+								fill: #eee;
+								pointer-events: all;
+								}
+
+								.map-layer {
+								fill: #fff;
+								stroke: #aaa;
+								}
+
+								.effect-layer{
+								pointer-events:none;
+								}
+
 							</style>
 						</head>
 						<div id="map_div">
@@ -49,9 +63,14 @@
 									.append("svg")
 									.attr("width", w)
 									.attr("height", h)
-									.style("position", "relative")				
+									.style("position", "relative")	
 
-								var g = svg_map.append("g");
+								svg_map.append('rect')
+									   .attr("class", "background")	
+									   .attr("width", "1000")
+									   .attr("height", "700")									   		
+
+								var g = svg_map.append('g');
 
 								var effectLayer = g.append('g')
   												   .classed('effect-layer', true);
