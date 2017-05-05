@@ -1,50 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>D3: Setting path fills</title>
-		<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
-		<style type="text/css">
-			/* No style rules here yet */		
-		</style>
-	</head>
-	<body>
-		<script type="text/javascript">
+<div class=" modal fade" id="map-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-content">
+		<div class="close-modal" data-dismiss="modal">
+			<div class="lr">
+				<div class="rl">
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<div class="modal-body">
+						<html lang="en">
 
-			//Width and height
-			var w = 500;
-			var h = 300;
+						<head>
+							<meta charset="utf-8">
+							<title>D3: Setting path fills</title>
+							<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
+							<style type="text/css">
+								/* No style rules here yet */
+							</style>
+						</head>
 
-			//Define map projection
-			var projection = d3.geo .mercator()
+						<body>
+							<script type="text/javascript">
+								//Width and height
+								var w = 500;
+								var h = 300;
+
+								//Define map projection
+								var projection = d3.geo.mercator()
 									.center([-73.9741874, 40.7711329])
-								   	.translate([w/2, h/2])
-								   	.scale([18000]);
+									.translate([w / 2, h / 2])
+									.scale([18000]);
 
-			//Define path generator
-			var path = d3.geo.path()
-							 .projection(projection);
+								//Define path generator
+								var path = d3.geo.path()
+									.projection(projection);
 
-			//Create SVG element
-			var svg = d3.select("body")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
+								//Create SVG element
+								var svg = d3.select("body")
+									.append("svg")
+									.attr("width", w)
+									.attr("height", h);
 
-			//Load in GeoJSON data
-			d3.json("pediacitiesnycneighborhoods.geojson", function(json) {
-				
-				//Bind data and create one path per GeoJSON feature
-				svg.selectAll("path")
-				   .data(json.features)
-				   .enter()
-				   .append("path")
-				   .attr("d", path)
-				   .style("fill", "steelblue");
-				console.log()
-		
-			});
-			
-		</script>
-	</body>
-</html>
+								//Load in GeoJSON data
+								d3.json("data/geojson/pediacitiesnycneighborhoods.geojson", function (json) {
+
+									//Bind data and create one path per GeoJSON feature
+									svg.selectAll("path")
+										.data(json.features)
+										.enter()
+										.append("path")
+										.attr("d", path)
+										.style("fill", "steelblue");
+									console.log()
+
+								});
+							</script>
+						</body>
+
+						</html>
+
+						<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
