@@ -25,7 +25,7 @@
 									fill: #eee;
 									pointer-events: all;
 								}
-
+								
 								div.tooltip {
 									box-sizing: border-box;
 									display: inline;
@@ -72,302 +72,305 @@
 
 								//Tooltip
 								var knn_tool_div = d3.select("#map_div").append("div")
-										.attr("class", "tooltip")
-										.style("z-index", 10000)
-										.style("opacity", 0);
+									.attr("class", "tooltip")
+									.style("z-index", 10000)
+									.style("opacity", 0);
 
 								d3.csv("/data/knn/fairknn.csv", function (data1) {
 									d3.csv("/data/knn/poorknn.csv", function (data2) {
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
-											//Define map projection
-											var projection = d3.geo.mercator()
-												.center([-73.7541, 40.712784]) //[e/w, n/s]
-												.translate([w / 2, h / 2])
-												.scale([67000]);
+											d3.csv("/data/data.csv", function (data) {
 
-											//Define path generator
-											var path = d3.geo.path()
-												.projection(projection);
+												//Define map projection
+												var projection = d3.geo.mercator()
+													.center([-73.7541, 40.712784]) //[e/w, n/s]
+													.translate([w / 2, h / 2])
+													.scale([67000]);
 
-											//Create SVG element
-											var svg_map = d3.select("#map_div")
-												.append("svg")
-												.attr("width", w)
-												.attr("height", h)
-												.style("position", "relative")
-												.style("width", "100%")
-											
-											//Adding background to svg
-											svg_map.append('rect')
-												.attr("class", "background")
-												.attr("width", "1400")
-												.attr("height", "900")
+												//Define path generator
+												var path = d3.geo.path()
+													.projection(projection);
 
-											//Load in GeoJSON data
-											d3.json("data/geojson/boroughs.geojson", function (json) {
+												//Create SVG element
+												var svg_map = d3.select("#map_div")
+													.append("svg")
+													.attr("width", w)
+													.attr("height", h)
+													.style("position", "relative")
+													.style("width", "100%")
 
-												//Bind data and create one path per GeoJSON feature
-												svg_map.selectAll("path")
-													.data(json.features)
-													.enter()
-													.append("path")
-													.attr("d", path)
-													.style("fill", "steelblue")
-													.on("mouseover", function (d) {
-														knn_tool_div.transition()
-															.duration(10)
-															.style("opacity", .9);
-														d3.select(this)
-															.style("opacity", 0.5)
-															.attr("stroke-width", "10px");
-														knn_tool_div.html("<b>" + "d.key" + "</b>" + "<br>" + "d.value" + " <i>" + "d.trees" + "</i> trees")
-															.style("left", (-100) + "px")
-															.style("top", (260) + "px");
-													})
-													.on("mouseout", function (d) {
-														knn_tool_div.transition()
-															.duration(200)
-															.style("opacity", 0);
-														d3.select(this)
-															.style("opacity", .9);
-													});
+												//Adding background to svg
+												svg_map.append('rect')
+													.attr("class", "background")
+													.attr("width", "1400")
+													.attr("height", "900")
 
-												addDots();
+												//Load in GeoJSON data
+												d3.json("data/geojson/boroughs.geojson", function (json) {
 
-												d3.selectAll("p")
-													.on("click", function () {
-														var bttnID = d3.select(this).attr("id");
-														var des = document.getElementById("KnnSelection")
+													//Bind data and create one path per GeoJSON feature
+													svg_map.selectAll("path")
+														.data(json.features)
+														.enter()
+														.append("path")
+														.attr("d", path)
+														.style("fill", "steelblue")
+														.on("mouseover", function (d) {
+															knn_tool_div.transition()
+																.duration(10)
+																.style("opacity", .9);
+															d3.select(this)
+																.style("opacity", 0.5)
+																.attr("stroke-width", "10px");
+															knn_tool_div.html("<b>" + d.properties.BoroName + "</b>" + "<br>" + "d.value" + " <i>" + "d.trees" + "</i> trees")
+																.style("left", (-100) + "px")
+																.style("top", (260) + "px");
+														})
+														.on("mouseout", function (d) {
+															knn_tool_div.transition()
+																.duration(200)
+																.style("opacity", 0);
+															d3.select(this)
+																.style("opacity", .9);
+														});
 
-														//Handle buttons for the different years
-														if (bttnID == "poordata") {
-															svg_map.selectAll("circle").remove()
-															svg_map.selectAll("circle")
-																.data(data2)
-																.enter()
-																.append("circle")
-																.transition().duration(1500)
-																.attr("cx", function (d) {
-																	return projection([d.lon, d.lat])[0];
-																})
-																.attr("cy", function (d) {
-																	return projection([d.lon, d.lat])[1];
-																})
-																.attr("r", 1.2)
-																.style("fill", "red")
-																.style("opacity", 0.9);
-															//changing the text saying what we are currently visualizing
-															KnnSelection.innerHTML = "Poor data"
-															document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
-														}
-														else if (bttnID == "fairdata") {
-															svg_map.selectAll("circle").remove()
-															svg_map.selectAll("circle")
-																.data(data1)
-																.enter()
-																.append("circle")
-																.transition().duration(1500)
-																.attr("cx", function (d) {
-																	return projection([d.lon, d.lat])[0];
-																})
-																.attr("cy", function (d) {
-																	return projection([d.lon, d.lat])[1];
-																})
-																.attr("r", 1.2)
-																.style("fill", "blue")
-																.style("opacity", 0.9);
-															//changing the text saying what we are currently visualizing
-															KnnSelection.innerHTML = "Fair data"
-															document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
-														}
-														else if (bttnID == "gooddata") {
-															svg_map.selectAll("circle").remove()
-															svg_map.selectAll("circle")
-																.data(data3)
-																.enter()
-																.append("circle")
-																.transition().duration(1500)
-																.attr("cx", function (d) {
-																	return projection([d.lon, d.lat])[0];
-																})
-																.attr("cy", function (d) {
-																	return projection([d.lon, d.lat])[1];
-																})
-																.attr("r", 1.2)
-																.style("fill", "green")
-																.style("opacity", 0.9);
-															//changing the text saying what we are currently visualizing
-															KnnSelection.innerHTML = "Good data"
-															document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
-														};
-													});
+													addDots();
 
-												// var i = 0;
-												// var inter = setInterval(function() {
-												// 	i++;
-												// 	if (i == 1) {
-												// 		//updateMap(data1);
-												// 		console.log("update1")
+													d3.selectAll("p")
+														.on("click", function () {
+															var bttnID = d3.select(this).attr("id");
+															var des = document.getElementById("KnnSelection")
 
-												// 		svg_map.selectAll("circle").remove()
-												// 		svg_map.selectAll("circle")
-												// 			.data(data2)
-												// 			.enter()
-												// 			.append("circle")
-												// 			.transition().duration(1500)
-												// 			.attr("cx", function (d) {
-												// 				return projection([d.lon, d.lat])[0];
-												// 			})
-												// 			.attr("cy", function (d) {
-												// 				return projection([d.lon, d.lat])[1];
-												// 			})
-												// 			.attr("r", 1.2)
-												// 			.style("fill", "red")
-												// 			.style("opacity", 0.9);
-												// 	} else if (i == 2) {
-												// 		//updateMap(data2);														
-												// 		console.log("update2")
+															//Handle buttons for the different years
+															if (bttnID == "poordata") {
+																svg_map.selectAll("circle").remove()
+																svg_map.selectAll("circle")
+																	.data(data2)
+																	.enter()
+																	.append("circle")
+																	.transition().duration(1500)
+																	.attr("cx", function (d) {
+																		return projection([d.lon, d.lat])[0];
+																	})
+																	.attr("cy", function (d) {
+																		return projection([d.lon, d.lat])[1];
+																	})
+																	.attr("r", 1.2)
+																	.style("fill", "red")
+																	.style("opacity", 0.9);
+																//changing the text saying what we are currently visualizing
+																KnnSelection.innerHTML = "Poor data"
+																document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
+															}
+															else if (bttnID == "fairdata") {
+																svg_map.selectAll("circle").remove()
+																svg_map.selectAll("circle")
+																	.data(data1)
+																	.enter()
+																	.append("circle")
+																	.transition().duration(1500)
+																	.attr("cx", function (d) {
+																		return projection([d.lon, d.lat])[0];
+																	})
+																	.attr("cy", function (d) {
+																		return projection([d.lon, d.lat])[1];
+																	})
+																	.attr("r", 1.2)
+																	.style("fill", "blue")
+																	.style("opacity", 0.9);
+																//changing the text saying what we are currently visualizing
+																KnnSelection.innerHTML = "Fair data"
+																document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
+															}
+															else if (bttnID == "gooddata") {
+																svg_map.selectAll("circle").remove()
+																svg_map.selectAll("circle")
+																	.data(data3)
+																	.enter()
+																	.append("circle")
+																	.transition().duration(1500)
+																	.attr("cx", function (d) {
+																		return projection([d.lon, d.lat])[0];
+																	})
+																	.attr("cy", function (d) {
+																		return projection([d.lon, d.lat])[1];
+																	})
+																	.attr("r", 1.2)
+																	.style("fill", "green")
+																	.style("opacity", 0.9);
+																//changing the text saying what we are currently visualizing
+																KnnSelection.innerHTML = "Good data"
+																document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
+															};
+														});
 
-												// 		svg_map.selectAll("circle").remove()
-												// 		svg_map.selectAll("circle")
-												// 			.data(data1)
-												// 			.enter()
-												// 			.append("circle")
-												// 			.transition().duration(1500)
-												// 			.attr("cx", function (d) {
-												// 				return projection([d.lon, d.lat])[0];
-												// 			})
-												// 			.attr("cy", function (d) {
-												// 				return projection([d.lon, d.lat])[1];
-												// 			})
-												// 			.attr("r", 1.2)
-												// 			.style("fill", "blue")
-												// 			.style("opacity", 0.9);
-												// 	} else if (i == 3) {
-												// 		i = 0;
-												// 		//updateMap(data3);
-												// 		console.log("update3")
+													// var i = 0;
+													// var inter = setInterval(function() {
+													// 	i++;
+													// 	if (i == 1) {
+													// 		//updateMap(data1);
+													// 		console.log("update1")
 
-												// 		svg_map.selectAll("circle").remove()
-												// 		svg_map.selectAll("circle")
-												// 			.data(data3)
-												// 			.enter()
-												// 			.append("circle")
-												// 			.transition().duration(1500)
-												// 			.attr("cx", function (d) {
-												// 				return projection([d.lon, d.lat])[0];
-												// 			})
-												// 			.attr("cy", function (d) {
-												// 				return projection([d.lon, d.lat])[1];
-												// 			})
-												// 			.attr("r", 1.2)
-												// 			.style("fill", "green")
-												// 			.style("opacity", 0.9);
-												// 	}
-												// }, 6000);
+													// 		svg_map.selectAll("circle").remove()
+													// 		svg_map.selectAll("circle")
+													// 			.data(data2)
+													// 			.enter()
+													// 			.append("circle")
+													// 			.transition().duration(1500)
+													// 			.attr("cx", function (d) {
+													// 				return projection([d.lon, d.lat])[0];
+													// 			})
+													// 			.attr("cy", function (d) {
+													// 				return projection([d.lon, d.lat])[1];
+													// 			})
+													// 			.attr("r", 1.2)
+													// 			.style("fill", "red")
+													// 			.style("opacity", 0.9);
+													// 	} else if (i == 2) {
+													// 		//updateMap(data2);														
+													// 		console.log("update2")
+
+													// 		svg_map.selectAll("circle").remove()
+													// 		svg_map.selectAll("circle")
+													// 			.data(data1)
+													// 			.enter()
+													// 			.append("circle")
+													// 			.transition().duration(1500)
+													// 			.attr("cx", function (d) {
+													// 				return projection([d.lon, d.lat])[0];
+													// 			})
+													// 			.attr("cy", function (d) {
+													// 				return projection([d.lon, d.lat])[1];
+													// 			})
+													// 			.attr("r", 1.2)
+													// 			.style("fill", "blue")
+													// 			.style("opacity", 0.9);
+													// 	} else if (i == 3) {
+													// 		i = 0;
+													// 		//updateMap(data3);
+													// 		console.log("update3")
+
+													// 		svg_map.selectAll("circle").remove()
+													// 		svg_map.selectAll("circle")
+													// 			.data(data3)
+													// 			.enter()
+													// 			.append("circle")
+													// 			.transition().duration(1500)
+													// 			.attr("cx", function (d) {
+													// 				return projection([d.lon, d.lat])[0];
+													// 			})
+													// 			.attr("cy", function (d) {
+													// 				return projection([d.lon, d.lat])[1];
+													// 			})
+													// 			.attr("r", 1.2)
+													// 			.style("fill", "green")
+													// 			.style("opacity", 0.9);
+													// 	}
+													// }, 6000);
+												});
+
+												function addDots() {
+													console.log("addDots")
+													//Adding more dots than you can count
+													// svg_map.selectAll("circle")
+													// 	.data(data1)
+													// 	.enter()
+													// 	.append("circle")
+													// 	.attr("cx", function (d) {
+													// 		return projection([d.lon, d.lat])[0];
+													// 	})
+													// 	.attr("cy", function (d) {
+													// 		return projection([d.lon, d.lat])[1];
+													// 	})
+													// 	.attr("r", 1.5)
+													// 	.style("fill", "orange")
+													// 	.style("opacity", 0.9);
+													// svg_map.selectAll("circle")
+													// 	.data(data2)
+													// 	.enter()
+													// 	.append("circle")
+													// 	.attr("cx", function (d) {
+													// 		return projection([d.lon, d.lat])[0];
+													// 	})
+													// 	.attr("cy", function (d) {
+													// 		return projection([d.lon, d.lat])[1];
+													// 	})
+													// 	.attr("r", 1.5)
+													// 	.style("fill", "red")
+													// 	.style("opacity", 0.9);
+													svg_map.selectAll("circle")
+														.data(data2)
+														.enter()
+														.append("circle")
+														.attr("cx", function (d) {
+															return projection([d.lon, d.lat])[0];
+														})
+														.attr("cy", function (d) {
+															return projection([d.lon, d.lat])[1];
+														})
+														.attr("r", 1.2)
+														.style("fill", "red")
+														.style("opacity", 0.9);
+												}
+
+												function updateMap(dat) {
+													console.log("updateMap")
+													// 	var animate = function() {
+													// 		console.log("animate")													   
+													// 		d3.select(this).transition().duration(1000)
+													// 			.attr("r", 7).each("end", function() {														
+													// 		d3.select(this).transition().duration(1000)
+													// 			.attr("r", 3).each("end", animate)});																								
+													// }
+
+													// svg_map.selectAll("circle").remove()
+													// svg_map.selectAll("circle")
+													// 	.data(dat)
+													// 	.enter()
+													// 	.append("circle")
+													// 	.transition().duration(1500)
+													// 	.attr("cx", function (d) {
+													// 		return projection([d.lon, d.lat])[0];
+													// 	})
+													// 	.attr("cy", function (d) {
+													// 		return projection([d.lon, d.lat])[1];
+													// 	})
+													// 	.attr("r", 1.5)
+													// 	.style("fill", "red")
+													// 	.style("opacity", 0.9);
+
+													// svg_map.select("#data2dots").selectAll("circle").remove()	
+													// svg_map.select("#data2dots").selectAll("circle")
+													// 		.data(data2)
+													// 		.enter()
+													// 		.append("circle")
+													// 		.attr("cx", function(d) {
+													// 			return projection_map([d.lat, d.lon])[0];
+													// 		})
+													// 		.attr("cy", function(d) {
+													// 			return projection_map([d.lat, d.lon])[1];
+													// 		})
+													// 		.attr("r", 10)
+													// 		.style("stroke-opacity", 0.6)
+													// 		.style("stroke-width", 5)
+													// 		.style("stroke", "white")
+													// 		.style("fill", "red")
+													// 		.style("opacity", 1);
+
+
+													// svg_map.select("circle")
+													//  	   .data(dat)
+													// 	   .attr("cx", function(d) {
+													// 		   return projection([d.lon, d.lat])[0];
+													// 	   })
+													// 	   .attr("cy", function(d) {
+													// 		   return projection([d.lon, d.lat])[1];
+													// 	   })
+													// 	   .attr("r", 5).on("end", updateMap)
+													// 	   .style("fill", "red")
+													// 	   .style("opacity", 0.9)
+												}
 											});
-
-											function addDots(){
-												console.log("addDots")
-												//Adding more dots than you can count
-												// svg_map.selectAll("circle")
-												// 	.data(data1)
-												// 	.enter()
-												// 	.append("circle")
-												// 	.attr("cx", function (d) {
-												// 		return projection([d.lon, d.lat])[0];
-												// 	})
-												// 	.attr("cy", function (d) {
-												// 		return projection([d.lon, d.lat])[1];
-												// 	})
-												// 	.attr("r", 1.5)
-												// 	.style("fill", "orange")
-												// 	.style("opacity", 0.9);
-												// svg_map.selectAll("circle")
-												// 	.data(data2)
-												// 	.enter()
-												// 	.append("circle")
-												// 	.attr("cx", function (d) {
-												// 		return projection([d.lon, d.lat])[0];
-												// 	})
-												// 	.attr("cy", function (d) {
-												// 		return projection([d.lon, d.lat])[1];
-												// 	})
-												// 	.attr("r", 1.5)
-												// 	.style("fill", "red")
-												// 	.style("opacity", 0.9);
-												svg_map.selectAll("circle")
-													.data(data2)
-													.enter()
-													.append("circle")
-													.attr("cx", function (d) {
-														return projection([d.lon, d.lat])[0];
-													})
-													.attr("cy", function (d) {
-														return projection([d.lon, d.lat])[1];
-													})
-													.attr("r", 1.2)
-													.style("fill", "red")
-													.style("opacity", 0.9);
-											}
-
-											function updateMap(dat) {
-												console.log("updateMap")
-											// 	var animate = function() {
-											// 		console.log("animate")													   
-											// 		d3.select(this).transition().duration(1000)
-											// 			.attr("r", 7).each("end", function() {														
-											// 		d3.select(this).transition().duration(1000)
-											// 			.attr("r", 3).each("end", animate)});																								
-											// }
-
-												// svg_map.selectAll("circle").remove()
-												// svg_map.selectAll("circle")
-												// 	.data(dat)
-												// 	.enter()
-												// 	.append("circle")
-												// 	.transition().duration(1500)
-												// 	.attr("cx", function (d) {
-												// 		return projection([d.lon, d.lat])[0];
-												// 	})
-												// 	.attr("cy", function (d) {
-												// 		return projection([d.lon, d.lat])[1];
-												// 	})
-												// 	.attr("r", 1.5)
-												// 	.style("fill", "red")
-												// 	.style("opacity", 0.9);
-
-												// svg_map.select("#data2dots").selectAll("circle").remove()	
-												// svg_map.select("#data2dots").selectAll("circle")
-												// 		.data(data2)
-												// 		.enter()
-												// 		.append("circle")
-												// 		.attr("cx", function(d) {
-												// 			return projection_map([d.lat, d.lon])[0];
-												// 		})
-												// 		.attr("cy", function(d) {
-												// 			return projection_map([d.lat, d.lon])[1];
-												// 		})
-												// 		.attr("r", 10)
-												// 		.style("stroke-opacity", 0.6)
-												// 		.style("stroke-width", 5)
-												// 		.style("stroke", "white")
-												// 		.style("fill", "red")
-												// 		.style("opacity", 1);
-
-
-												// svg_map.select("circle")
-											    //  	   .data(dat)
-												// 	   .attr("cx", function(d) {
-												// 		   return projection([d.lon, d.lat])[0];
-												// 	   })
-												// 	   .attr("cy", function(d) {
-												// 		   return projection([d.lon, d.lat])[1];
-												// 	   })
-												// 	   .attr("r", 5).on("end", updateMap)
-												// 	   .style("fill", "red")
-												// 	   .style("opacity", 0.9)
-											}																					
 										});
 									});
 								});
