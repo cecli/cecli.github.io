@@ -45,7 +45,13 @@
 								var h = 700;
 
 								d3.csv("data/knn/fairknn.csv", function(data){
+									data.forEach(function(d){
+										d.lat = +d.lat;
+										d.lon = +d.lon;
+									});
 									console.log(data[0])
+
+									
 								});
 
 								//Define map projection
