@@ -56,7 +56,9 @@
 										.enter()
 										.append("path")
 										.attr("d", path)
-										.style("fill", "steelblue");
+										.attr("fill", function(d){
+											return d.properties.stroke;
+										});
 
 								});
 							</script>
