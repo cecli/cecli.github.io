@@ -117,7 +117,7 @@
 														div.transition()
 															.duration(10)
 															.style("opacity", .9);
-														d3.select("svg")
+														d3.select(this)
 															.style("opacity", 0.5)
 															.attr("stroke-width", "10px");
 														div.html("<b>" + "d.key" + "</b>" + "<br>" + "d.value" + " <i>" + "d.trees" + "</i> trees")
@@ -128,7 +128,7 @@
 														div.transition()
 															.duration(200)
 															.style("opacity", 0);
-														d3.select("svg")
+														d3.select(this)
 															.style("opacity", .9);
 													});
 
