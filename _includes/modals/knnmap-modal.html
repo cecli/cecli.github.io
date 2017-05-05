@@ -25,20 +25,54 @@
 									fill: #eee;
 									pointer-events: all;
 								}
+
+								div.tooltip {
+									box-sizing: border-box;
+									display: inline;
+									font-size: 20px;
+									width: 100%;
+									z-index: 10000;
+									line-height: 1;
+									color: rgba(0, 0, 0, 0.8);
+									content: "\25BC";
+									position: absolute;
+									text-align: center;
+								}
+								
+								#tooltip {
+									position: absolute;
+									width: 200px;
+									height: auto;
+									padding: 10px;
+									background-color: white;
+									-webkit-border-radius: 10px;
+									-moz-border-radius: 10px;
+									border-radius: 10px;
+									-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+									-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+									box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+									pointer-events: none;
+								}
 							</style>
 						</head>
 						<div id="map_div">
 							<script type="text/javascript">
 								//Width and height
 								var w = 1700;
-								var h = 1200;
+								var h = 900;
+
+								//Tooltip
+								var div = d3.select("#tooltip_div").append("div")
+										.attr("class", "tooltip")
+										.style("z-index", 10000)
+										.style("opacity", 0);
 
 								d3.csv("/data/knn/fairknn.csv", function (data1) {
 									d3.csv("/data/knn/poorknn.csv", function (data2) {
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
 											//Define map projection
 											var projection = d3.geo.mercator()
-												.center([-73.745941, 40.612784])
+												.center([-73.75941, 40.612784])
 												.translate([w / 2, h / 2])
 												.scale([67000]);
 
