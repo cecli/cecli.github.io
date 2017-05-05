@@ -156,6 +156,7 @@
 													.data(dat)
 													.enter()
 													.append("circle")
+													.transition().duration(1500)
 													.attr("cx", function (d) {
 														return projection([d.lon, d.lat])[0];
 													})
