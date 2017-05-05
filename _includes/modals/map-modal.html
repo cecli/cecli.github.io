@@ -37,21 +37,7 @@
 									// data.forEach(function(d) {
 									// 	d.lat = +d.lat,
 									// 	d.lon = +d.lon
-									// });		
-
-									 svg.selectAll("circle")
-										.data(data)
-										.enter()
-										.append("circle")
-										.attr("cx", function(d) {
-												return projection([d.lon, d.lat])[0];
-										})
-										.attr("cy", function(d) {
-												return projection([d.lon, d.lat])[1];
-										})
-										.attr("r", 5)
-										.style("fill", "yellow")
-										.style("opacity", 0.75);
+									// });										 
 
 									//Define map projection
 									var projection = d3.geo.mercator()
@@ -75,6 +61,20 @@
 										.attr("class", "background")
 										.attr("width", "1000")
 										.attr("height", "700")
+
+									svg.selectAll("circle")
+										.data(data)
+										.enter()
+										.append("circle")
+										.attr("cx", function(d) {
+												return projection([d.lon, d.lat])[0];
+										})
+										.attr("cy", function(d) {
+												return projection([d.lon, d.lat])[1];
+										})
+										.attr("r", 5)
+										.style("fill", "yellow")
+										.style("opacity", 0.75);
 
 									//Load in GeoJSON data
 									d3.json("data/geojson/boroughs.geojson", function (json) {										
