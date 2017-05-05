@@ -91,6 +91,7 @@
 											});
 
 											function addDots(){
+												console.log("addDots")
 												//Adding more dots than you can count
 												svg_map.selectAll("circle")
 													.data(data1)
@@ -134,6 +135,7 @@
 											}
 
 											function updateMap(dat) {
+												console.log("updateMap")
 												var animate = function() {
 													d3.select(this).transition().duration(1500)
 													.attr("r", 7).each("end", function () {
