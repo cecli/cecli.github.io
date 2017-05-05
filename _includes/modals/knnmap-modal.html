@@ -117,7 +117,7 @@
 														div.transition()
 															.duration(10)
 															.style("opacity", .9);
-														d3.select("#map_div")
+														d3.select("svg")
 															.style("opacity", 0.5)
 															.attr("stroke-width", "10px");
 														div.html("<b>" + "d.key" + "</b>" + "<br>" + "d.value" + " <i>" + "d.trees" + "</i> trees")
@@ -128,7 +128,7 @@
 														div.transition()
 															.duration(200)
 															.style("opacity", 0);
-														d3.select("#map_div")
+														d3.select("svg")
 															.style("opacity", .9);
 													});
 
@@ -306,7 +306,7 @@
 													.attr("cy", function (d) {
 														return projection([d.lon, d.lat])[1];
 													})
-													.attr("r", 1.5)
+													.attr("r", 1.2)
 													.style("fill", "red")
 													.style("opacity", 0.9);
 											}
