@@ -69,6 +69,7 @@
 								<br><br>
 
 								<script type="text/javascript">
+
 									var svg = d3.select("svg")
 									margin = { top: 20, right: 20, bottom: 30, left: 40 },
 										width = +svg.attr("width") - margin.left - margin.right,
@@ -94,7 +95,7 @@
 										.style("z-index", 10000)
 										.style("opacity", 0);
 
-									d3.csv("data/data.csv", function (d, i, columns) {
+									d3.csv("/data/data.csv", function (d, i, columns) {
 										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 										return d;
 									}, function (error, data) {
@@ -184,7 +185,7 @@
 												//Handle buttons for the different years
 												if (bttnID == "95data") {
 													//1995 data
-													data_file = "data1995.csv"
+													data_file = "/data/data1995.csv"
 													SelectionYear.innerHTML = "1995 data"
 													//changing the text saying what we are currently visualizing
 													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
@@ -192,7 +193,7 @@
 												}
 												else if (bttnID == "05data") {
 													//2005 data
-													data_file = "data2005.csv"
+													data_file = "/data/data2005.csv"
 													SelectionYear.innerHTML = "2005 data"
 													//changing the text saying what we are currently visualizing
 													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
@@ -201,7 +202,7 @@
 												}
 												else if (bttnID == "15data") {
 													//2015 data
-													data_file = "data.csv"
+													data_file = "/data/data.csv"
 													SelectionYear.innerHTML = "2015 data"
 													//changing the text saying what we are currently visualizing
 													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
