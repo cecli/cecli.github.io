@@ -63,7 +63,8 @@
 									.append("svg")
 									.attr("width", w)
 									.attr("height", h)
-									.style("position", "relative")	
+									.style("position", "relative")
+									.style("width", "100%")	
 
 								svg_map.append('rect')
 									   .attr("class", "background")	
@@ -100,11 +101,7 @@
 										.style("fill", "steelblue")
 										.on("mouseover", function(d){
 											console.log("mouseoever")
-											div.transition()
-
-											d3.select(this)
-												.transition()
-												.attr("fill", "rgb(180,180,180)")
+	
 										});
 								});
 							</script>
