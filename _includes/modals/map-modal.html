@@ -58,7 +58,10 @@
 										.enter()
 										.append("path")
 										.attr("d", path)
-										.style("fill", "steelblue");
+										.style("fill", "steelblue")
+										.on("mouseover", function(d){
+											console.log("mouseover")
+										});
 								});
 							</script>
 						</div>
