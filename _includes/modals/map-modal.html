@@ -71,7 +71,33 @@
 												})
 												.attr("r", 5)
 												.style("fill", "orange")
-												.style("opacity", 0.75);
+												.style("opacity", 0.50);
+											svg_map.selectAll("circle")
+												.data(data2)
+												.enter()
+												.append("circle")
+												.attr("cx", function (d) {
+													return projection([d.lon, d.lat])[0];
+												})
+												.attr("cy", function (d) {
+													return projection([d.lon, d.lat])[1];
+												})
+												.attr("r", 5)
+												.style("fill", "red")
+												.style("opacity", 0.50);
+											svg_map.selectAll("circle")
+												.data(data3)
+												.enter()
+												.append("circle")
+												.attr("cx", function (d) {
+													return projection([d.lon, d.lat])[0];
+												})
+												.attr("cy", function (d) {
+													return projection([d.lon, d.lat])[1];
+												})
+												.attr("r", 5)
+												.style("fill", "green")
+												.style("opacity", 0.50);
 
 											//Load in GeoJSON data
 											d3.json("data/geojson/boroughs.geojson", function (json) {
