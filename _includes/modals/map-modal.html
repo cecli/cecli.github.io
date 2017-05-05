@@ -44,7 +44,8 @@
 								var svg = d3.select("#map_div")
 									.append("svg")
 									.attr("width", w)
-									.attr("height", h);
+									.attr("height", h)
+									.style("position", "relative");
 
 								//Load in GeoJSON data
 								d3.json("data/geojson/pediacitiesnycneighborhoods.geojson", function (json) {
