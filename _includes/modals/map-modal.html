@@ -37,7 +37,23 @@
 									// data.forEach(function(d) {
 									// 	d.lat = +d.lat,
 									// 	d.lon = +d.lon
-									// });										 
+									// });			
+
+									//Load in GeoJSON data
+									d3.json("data/geojson/boroughs.geojson", function (json) {										
+
+										//Bind data and create one path per GeoJSON feature
+										svg_map.selectAll("path")
+											.data(json.features)
+											.enter()
+											.append("path")
+											.attr("d", path)
+											.style("fill", "steelblue")
+											.on("mouseover", function (d) {
+												console.log("mouseoever")
+
+											});
+									});							 
 
 									//Define map projection
 									var projection = d3.geo.mercator()
@@ -74,24 +90,7 @@
 										})
 										.attr("r", 5)
 										.style("fill", "orange")
-										.style("z-index", "10000")
-										.style("opacity", 0.75);
-
-									//Load in GeoJSON data
-									d3.json("data/geojson/boroughs.geojson", function (json) {										
-
-										//Bind data and create one path per GeoJSON feature
-										svg_map.selectAll("path")
-											.data(json.features)
-											.enter()
-											.append("path")
-											.attr("d", path)
-											.style("fill", "steelblue")
-											.on("mouseover", function (d) {
-												console.log("mouseoever")
-
-											});
-									});
+										.style("opacity", 0.75);									
 								});
 							</script>
 						</div>
