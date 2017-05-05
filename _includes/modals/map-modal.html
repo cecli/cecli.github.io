@@ -25,15 +25,6 @@
 									fill: #eee;
 									pointer-events: all;
 								}
-								
-								.map-layer {
-									fill: #fff;
-									stroke: #aaa;
-								}
-								
-								.effect-layer {
-									pointer-events: none;
-								}
 							</style>
 						</head>
 						<div id="map_div">
@@ -46,8 +37,7 @@
 									data.forEach(function(d) {
 										d.lat = +d.lat,
 										d.lon = +d.lon
-									});
-								
+									});								
 
 									//Define map projection
 									var projection = d3.geo.mercator()
@@ -75,13 +65,7 @@
 									//Load in GeoJSON data
 									d3.json("data/geojson/boroughs.geojson", function (json) {
 
-										for (var i = 0; i < data.length; i++) {
-
-											var borough = data[i].BoroName;
-
-											console.log(borough)
-
-										}
+										
 
 										//Bind data and create one path per GeoJSON feature
 										svg_map.selectAll("path")
