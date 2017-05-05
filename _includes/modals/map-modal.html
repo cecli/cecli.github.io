@@ -60,6 +60,7 @@
 										.attr("d", path)
 										.style("fill", "steelblue")
 										.on("mouseover", function(d){
+											console.log("mouseoever")
 											d3.select(this)
 												.transition()
 												.attr("fill", "rgb(180,180,180)")
