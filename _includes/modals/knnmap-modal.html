@@ -38,7 +38,7 @@
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
 											//Define map projection
 											var projection = d3.geo.mercator()
-												.center([-73.785941, 40.612784])
+												.center([-73.765941, 40.612784])
 												.translate([w / 2, h / 2])
 												.scale([67000]);
 
@@ -72,6 +72,7 @@
 													.style("fill", "steelblue")
 													.on("mouseover", function (d) {
 														console.log("mouseoever")
+
 													});
 
 												addDots();
