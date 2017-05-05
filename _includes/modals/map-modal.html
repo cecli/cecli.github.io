@@ -30,6 +30,10 @@
 								var w = 1000;
 								var h = 700;
 
+								d3.csv("data/knn/fairknn.csv", function(d, i, columns){
+
+								});
+
 								//Define map projection
 								var projection = d3.geo.mercator()
 									.center([-73.805941, 40.712784])
@@ -45,13 +49,17 @@
 									.append("svg")
 									.attr("width", w)
 									.attr("height", h)
-									.style("position", "relative");
+									.style("position", "relative")
+
+								svg_map.append("rect")
+									.attr("class", "background")
+									.attr("width", "1000")
+									.attr("height", "700")
 
 								svg_map.append("g").attr("id", "nodes_map")
 
 								//Load in GeoJSON data
 								d3.json("data/geojson/boroughs.geojson", function (json) {
-
 									//Bind data and create one path per GeoJSON feature
 									svg_map.selectAll("path")
 										.data(json.features)
@@ -61,6 +69,8 @@
 										.style("fill", "steelblue")
 										.on("mouseover", function(d){
 											console.log("mouseoever")
+											div.transition()
+
 											d3.select(this)
 												.transition()
 												.attr("fill", "rgb(180,180,180)")
