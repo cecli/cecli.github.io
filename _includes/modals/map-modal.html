@@ -75,6 +75,19 @@
 													});
 
 												addDots();
+
+												var i = 0;
+												var inter = setInterval(function() {
+													i++;
+													if (i == 1) {
+														updateMap(data1);
+													} else if (i == 2) {
+														updateMap(data2);
+													} else if (i == 3) {
+														i = 0;
+														updateMap(data3);
+													}
+												}, 4000);
 											});
 
 											function addDots(){
@@ -118,7 +131,18 @@
 													.attr("r", 1.5)
 													.style("fill", "green")
 													.style("opacity", 0.9);
-											}																						
+											}
+
+											function updateMap(dat) {
+												var animate = function() {
+													d3.select(this).transition().duration(1500)
+													.attr("r", 7).each("end", function () {
+													d3.select(this).transition().duration(1500)
+														.attr("r", 3).each("end", animate)});
+												}
+
+												
+											}																					
 										});
 									});
 								});
