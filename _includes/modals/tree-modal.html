@@ -218,12 +218,12 @@
 										function update_hist(data_file) {
 											d3.csv(data_file, function (data) {
 												console.log(data)
-												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
-												return d;
+												// for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
+												// return d;
 											}, function (error, data) {
 												if (error) throw error;												
 
-												var keys = data.columns.slice(1);
+												var keys = ["Tree", "NYC", "Bronx", "Brooklyn", "Staten Island", "Manhattan", "Queens"];
 
 												x0.domain(data.map(function (d) { return d.Tree; }));
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
