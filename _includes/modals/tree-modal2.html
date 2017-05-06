@@ -148,7 +148,7 @@
 						<div id="histogram_div">
 							<div id="trees_div"y>
 								<div class="parent" id="tree_parent">
-									<div id="london_planetree" onclick="londonPlanetree()" class="myButton"><INPUT style="background: url(img/modals/Londonplanetree_resized.jpg) no-repeat">
+									<div id="london_planetree" onclick="londonPlanetree()" onmouseover="onImageHover('London Planetree')" class="myButton"><INPUT style="background: url(img/modals/Londonplanetree_resized.jpg) no-repeat">
 										<span id="title1">London Planetree</span> 
 									</div>
 									<div id="honeylocust" onclick="honeyLocust()" class="myButton"><INPUT style="background: url(img/modals/Honeylocust_resized.jpg) no-repeat">
@@ -188,25 +188,9 @@
 										.style("z-index", 10000)
 										.style("opacity", 0);
 
-									d3.select("#tree_parent")
-									  .on("mouseover", function(d){
-										  trees_tool_div.transition()
-																.duration(10)
-																.style("opacity", .9);
-															d3.select(this)
-																.style("opacity", 1)
-																.attr("stroke-width", "12px");
-															trees_tool_div.html("<b>" + "hest" + "</b>")
-																.style("left", (400) + "px")
-																.style("top", (300) + "px");
-														})
-														.on("mouseout", function (d) {
-															trees_tool_div.transition()
-																.duration(200)
-																.style("opacity", 0);
-															d3.select(this)
-																.style("opacity", .9);
-									  })
+									function onImageHover(treeType){
+										console.log("hover tree")
+									}
 
 									function londonPlanetree() {
 										var demo = document.getElementById('demo');
