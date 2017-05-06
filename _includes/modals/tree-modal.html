@@ -97,13 +97,12 @@
 										.style("z-index", 10000)
 										.style("opacity", 0);
 
-						   data2015 = d3.csv("/data/tree_top5_data.csv", function (d, i, columns) {
+									d3.csv("/data/tree_top5_data.csv", function (d, i, columns) {
+										console.log(d, i, columns)
 										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 										return d;
 									}, function (error, data) {
 										if (error) throw error;
-
-										console.log(data2015)
 
 										var keys = data.columns.slice(1);
 
@@ -218,6 +217,7 @@
 
 										function update_hist(data_file) {
 											d3.csv(data_file, function (d, i, columns) {
+												console.log(d, i, columns)
 												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 												return d;
 											}, function (error, data) {
