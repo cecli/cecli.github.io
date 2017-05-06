@@ -116,13 +116,17 @@
 														.attr("d", path)
 														.style("fill", "steelblue")
 														.on("mouseover", function (d) {
+															var boro_area = ""
+															if(d.properties.BoroName == "Manhattan"){
+																boro_area = "59.1 sqkm"
+															}
 															knn_tool_div.transition()
 																.duration(10)
 																.style("opacity", .9);
 															d3.select(this)
 																.style("opacity", 0.5)
 																.attr("stroke-width", "12px");
-															knn_tool_div.html("<b>" + d.properties.BoroName + "</b>" + "<br>" + "area: " + 1000 + " <i>" + "<br>" + "has " + 5 + "</i> trees")
+															knn_tool_div.html("<b>" + d.properties.BoroName + "</b>" + "<br>" + "area: " + boro_area + " <i>" + "<br>" + "has " + 5 + "</i> trees")
 																.style("left", (-250) + "px")
 																.style("top", (360) + "px");
 														})
