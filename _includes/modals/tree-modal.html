@@ -216,10 +216,10 @@
 											});
 
 										function update_hist(data_file) {
-											d3.csv("/data/tree_top5_data.csv", function (d, i, columns) {
+											d3.csv(data_file, function (d, i, columns) {
 												console.log(d, i, columns)
-												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
-												return d;
+												// for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
+												// return d;
 											}, function (error, data) {
 												if (error) throw error;
 
