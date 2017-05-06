@@ -110,7 +110,7 @@
                                                 .attr("fill", "yellow")
                                                 .attr("stroke", "orange")
                                                 .attr("stroke-width", "3px")    
-                                                .attr("opacity", ".4")
+                                                .attr("opacity", ".4");
 
 
                                     //Define clipping path
@@ -121,9 +121,25 @@
                                         .attr("y", padding)
                                         .attr("width", w - padding * 3)
                                         .attr("height", h - padding * 3);
-                                        
-                                    svg_scatter.append("circle")
-                                                .call(me);
+
+                                    svg_scatter.selectAll("circle")
+                                               .data(root_p)
+                                               .enter()
+                                               .append("circle")
+                                               .attr("cx", function(d, i) {
+                                                    console.log(root_p[i])
+                                                    return xScale(root_p[i]);
+                                               })
+                                               .attr("cy", function(d) {
+                                                    return yScale(trunk_p[i]);
+                                               })
+                                               .attr("r", function(d) {
+                                                    return rScale(percentage_problem[i]);
+                                               })
+                                                .attr("fill", "yellow")
+                                                .attr("stroke", "orange")
+                                                .attr("stroke-width", "3px")    
+                                                .attr("opacity", ".4");
 
                                     //Create X axis
                                     svg_scatter.append("g")
