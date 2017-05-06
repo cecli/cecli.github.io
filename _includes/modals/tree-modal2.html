@@ -193,7 +193,7 @@
 										  trees_tool_div.transition()
 																.duration(10)
 																.style("opacity", .9);
-															d3.select(this)
+															d3.select("#trees_div")
 																.style("opacity", 1)
 																.attr("stroke-width", "12px");
 															trees_tool_div.html("<b>" + $(".title10").hover(function(){return $("#title10").text}) + "</b>")
@@ -204,7 +204,7 @@
 															trees_tool_div.transition()
 																.duration(200)
 																.style("opacity", 0);
-															d3.select(this)
+															d3.select("#trees_div")
 																.style("opacity", .9);
 									  })
 
