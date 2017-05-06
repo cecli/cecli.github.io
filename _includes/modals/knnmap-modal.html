@@ -123,18 +123,18 @@
 																boro_trees = total_trees_data[0].Manhattan_Total
 															} else if (d.properties.BoroName == "Queens"){
 																boro_area = "280 sqkm"
-																boro_trees = total_trees_data[0].Queens
+																boro_trees = total_trees_data[0].Queens_Total
 															} else if (d.properties.BoroName == "Staten Island"){
 																boro_area = "152 sqkm"
-																boro_trees = total_trees_data[0].Staten_Island
+																boro_trees = total_trees_data[0].Staten_Island_Total
 															}
 															else if (d.properties.BoroName == "Brooklyn"){
 																boro_area = "180 sqkm"
-																boro_trees = total_trees_data[0].Brooklyn
+																boro_trees = total_trees_data[0].Brooklyn_Total
 															}
 															else if (d.properties.BoroName == "Bronx"){
 																boro_area = "110 sqkm"
-																boro_trees = total_trees_data[0].Bronx
+																boro_trees = total_trees_data[0].Bronx_Total
 															}
 															knn_tool_div.transition()
 																.duration(10)
@@ -142,7 +142,7 @@
 															d3.select(this)
 																.style("opacity", 0.5)
 																.attr("stroke-width", "12px");
-															knn_tool_div.html("<b>" + d.properties.BoroName + "</b>" + "<br>" + "area: " + boro_area + " <i>" + "<br>" + "has " + boro_trees + "</i> trees")
+															knn_tool_div.html("<b>" + d.properties.BoroName + "</b>" + "<br>" + "area: " + boro_area + "<br>" + "has " + boro_trees + " trees")
 																.style("left", (-250) + "px")
 																.style("top", (360) + "px");
 														})
