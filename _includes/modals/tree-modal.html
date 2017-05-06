@@ -218,17 +218,17 @@
 											d3.csv(data_file, function (d, i, columns) {
 												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 												return d;
-											}, function (error, data) {
+											}, function (error, data2) {
 												if (error) throw error;
 
-												var keys = data.columns.slice(1);
+												var keys = data2.columns.slice(1);
 
-												x0.domain(data.map(function (d) { return d.Tree; }));
+												x0.domain(data2.map(function (d) { return d.Tree; }));
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
+												y.domain([0, d3.max(data2, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
 
 												g.selectAll("g")
-													.data(data)
+													.data(data2)
 													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
 													.selectAll("rect")
 													//.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key] }; }); })
