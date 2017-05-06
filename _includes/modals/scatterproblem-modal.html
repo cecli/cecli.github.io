@@ -33,6 +33,7 @@
                                 var trunk_p = []
                                 var branch_p = []
                                 var borough_p = []
+                                var percentage_problem = []
 
                                 firstcsv(datapath);
 
@@ -46,6 +47,7 @@
                                                 root_p.push(d.root)
                                                 trunk_p.push(d.trunk)
                                                 branch_p.push(d.branch)
+                                                percentage_problem.push(d.Problem_percentage)
                                             })
                                         }
                                     });
@@ -67,7 +69,7 @@
                                                          .range([padding, w - padding * 2]);
 
                                     var rScale = d3.scale.linear() //scale for the ray
-                                                         .domain([0, d3.max(root_p, function(d) { return d+150; }), 
+                                                         .domain([0, d3.max(percentage_problem, function(d) { return d+150; }), 
                                                                 ])
                                                          .range([3, 30]);
 
@@ -100,7 +102,7 @@
                                                     return yScale(trunk_p[i]);
                                                })
                                                .attr("r", function(d) {
-                                                    return rScale(branch_p[i]);
+                                                    return rScale(percentage_problem[i]);
                                                })
                                                 .attr("fill", "yellow")
                                                 .attr("stroke", "orange")
