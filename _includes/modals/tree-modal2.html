@@ -148,8 +148,8 @@
 						<div id="histogram_div">
 							<div id="trees_div"y>
 								<div class="parent" id="tree_parent">
-									<div id="london_planetree" onclick="londonPlanetree()" onmouseover="onImageHover('London Planetree')" class="myButton"><INPUT id="1" style="background: url(img/modals/Londonplanetree_resized.jpg) no-repeat">
-										<span id="title1">London Planetree</span> 
+									<div id="london_planetree" onclick="londonPlanetree()" onmouseover="onImageHover('London Planetree')" class="myButton"><INPUT style="background: url(img/modals/Londonplanetree_resized.jpg) no-repeat">
+										<span id="title1" style="height: 100px;width: 100px;">London Planetree</span> 
 									</div>
 									<div id="honeylocust" onclick="honeyLocust()" onmouseover="onImageHover('Honeylocust')" class="myButton"><INPUT style="background: url(img/modals/Honeylocust_resized.jpg) no-repeat">
 										<span id="title2">Honeylocust</span> 
@@ -189,7 +189,7 @@
 										.style("opacity", 0);
 
 									function onImageHover(treeType){
-										d3.selectAll("#1, #title2, #title3, #title4, #title5, #title6, #title7, #title8, #title9, #title10")
+										d3.selectAll("#title1, #title2, #title3, #title4, #title5, #title6, #title7, #title8, #title9, #title10")
 											.on("mouseover", function (d) {
 															trees_tool_div.transition()
 																.duration(10)
