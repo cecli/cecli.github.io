@@ -1,0 +1,158 @@
+<div class="modal-modal modal fade" id="scatterproblem-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <h2>Title</h2>
+                        <hr class="star-primary">
+                        <p>Description</p>
+                        <html lang="en">
+
+                        <head>
+                            <meta charset="utf-8">
+                            <title>D3 Page Template</title>
+                            <script type="text/javascript" src="d3/d3.js"></script>
+                        </head>
+
+                        <div id="scatterproblems">
+                            <script type="text/javascript">
+                                //d3.select("body").append("p").text("New paragraph using javascript!");
+                                var w = 950;
+                                var h = 700;
+                                var padding = 100;
+                                var datapath = '/data/Borough_problems.csv';
+
+                                var root_p = []
+                                var trunk_p = []
+                                var branch_p = []
+                                var borough_p = []
+
+                                firstcsv(datapath);
+
+                                function firstcsv(d_path){
+                                    d3.csv(d_path, function (error, data){
+                                        if(error){
+                                            console.log(error)
+                                        } else{
+                                            data.map(function(d){
+                                                borough_p.push(d.Borough)
+                                                root_p.push(d.root)
+                                                trunk_p.push(d.trunk)
+                                                branch_p.push(d.branch)
+                                            }
+                                        }
+                                    });
+                                    do_svg_stuff() //thus that the dataset is already loaded 
+                                } //end of firstcsv function
+
+
+                                function do_svg_stuff(){
+                                    //function inside which the actual svg is handled 
+                                    //Create scale functions
+                                    var xScale = d3.scale.linear()
+                                                         .domain([0, d3.max(root_p, function(d) { return d+150; }), 
+                                                                ])
+                                                         .range([padding, w - padding * 2]);
+
+                                    var yScale = d3.scale.linear()
+                                                         .domain([0, d3.max(root_p, function(d) { return d+150; }), 
+                                                                ])
+                                                         .range([padding, w - padding * 2]);
+
+                                    var rScale = d3.scale.linear() //scale for the ray
+                                                         .domain([0, d3.max(root_p, function(d) { return d+150; }), 
+                                                                ])
+                                                         .range([3, 30]);
+
+                                    //Define X axis
+                                    var xAxis = d3.svg.axis()
+                                                      .scale(xScale)
+                                                      .orient("bottom")
+                                                      .ticks(10);
+
+                                    //Define Y axis
+                                    var yAxis = d3.svg.axis()
+                                                      .scale(yScale)
+                                                      .orient("left")
+                                                      .ticks(10);
+
+                                    //Create SVG element
+                                    var svg = d3.select("#scatterproblems")
+                                                .append("svg")
+                                                .attr("width", w)
+                                                .attr("height", h);
+
+                                    var me = svg.selectAll("circle")
+                                               .data(root_p)
+                                               .enter()
+                                               .append("circle")
+                                               .attr("cx", function(d, i) {
+                                                    return xScale(d);
+                                               })
+                                               .attr("cy", function(d) {
+                                                    return yScale(trunk_p[i]);
+                                               })
+                                               .attr("r", function(d) {
+                                                    return rScale(branch_p[i]);
+                                               })
+                                                .attr("fill", "yellow")
+                                                .attr("stroke", "orange")
+                                                .attr("stroke-width", "3px")    
+                                                .attr("opacity", ".7")
+
+
+                                    //Define clipping path
+                                    svg .append("clipPath")                 //Make a new clipPath
+                                        .attr("id", "chart-area")           //Assign an ID
+                                        .append("rect")                     //Within the clipPath, create a new rect
+                                        .attr("x", padding)                 //Set rect's position and size…
+                                        .attr("y", padding)
+                                        .attr("width", w - padding * 3)
+                                        .attr("height", h - padding * 3);
+
+
+                                    //Create X axis
+                                    svg.append("g")
+                                        .attr("class", "axis")
+                                        .attr("transform", "translate(0," + (h - padding ) + ")")
+                                        .call(xAxis);
+                                    
+                                    //Create Y axis
+                                    svg.append("g")
+                                        .attr("class", "axis")
+                                        .attr("transform", "translate(" + (padding - 23) + ",0)") //translate the axis a bit to fix the circles
+                                        .call(yAxis);
+
+                                    //Add axis labels
+                                    svg.append("text")
+                                        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                                        .attr("transform", "translate("+ (w/2) +","+((h-((padding-2)/10))-20)+")")  // centre below axis
+                                        .text("Total #ROOT");
+                                        
+                                    svg.append("text")
+                                        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                                        .attr("transform", "translate("+ ((padding/5)-8) +","+((h-(padding))/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+                                        .text("Total #TRUNK");
+                                    }
+
+
+                            </script>
+
+
+                        </div>
+
+                        </html>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
