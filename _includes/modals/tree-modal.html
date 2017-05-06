@@ -123,7 +123,7 @@
 											.attr("x", function (d) { return x1(d.key); })
 											.attr("y", function (d) { return y(d.value); })
 											.attr("width", x1.bandwidth())
-											.attr("height", function (d) { console.log(height); return height - y(d.value); })
+											.attr("height", function (d) { return height - y(d.value); })
 											.attr("fill", function (d) { return z(d.key); })
 											.on("mouseover", function (d) {
 												hist_tool_div.transition()
@@ -237,16 +237,16 @@
 
 												g.selectAll("g")
 													.data(data)
-													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
-													.selectAll("rect")
+														.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
+												.selectAll("rect")
 													//.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key] }; }); })
-													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
+													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key]}; }); })
 													.transition()
 													.duration(1000)
 													.attr("x", function (d) { return x1(d.key); })
 													.attr("y", function (d) { return y(d.value); })
 													.attr("width", x1.bandwidth())
-													.attr("height", function (d) {console.log(height); return height - y(d.value); })
+													.attr("height", function (d) { return height - y(d.value); })
 													.attr("fill", function (d) { return z(d.key); });
 
 												//btnRender(data)
