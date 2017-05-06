@@ -93,7 +93,7 @@
                                                 .attr("width", w)
                                                 .attr("height", h);
 
-                                    var me = svg_scatter.selectAll("circle")
+                                    var me = svg.selectAll("circle")
                                                .data(root_p)
                                                .enter()
                                                .append("circle")
@@ -121,7 +121,9 @@
                                         .attr("y", padding)
                                         .attr("width", w - padding * 3)
                                         .attr("height", h - padding * 3);
-
+                                        
+                                    svg_scatter.append("circle")
+                                                .call(me);
 
                                     //Create X axis
                                     svg_scatter.append("g")
