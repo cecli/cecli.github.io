@@ -111,7 +111,7 @@
 										x0.domain(data.map(function (d) { return d.Tree; }));
 										x1.domain(keys).rangeRound([0, x0.bandwidth()]);
 										y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
-
+										console.log(d[key])
 										g.append("svg")
 											.selectAll("g")
 											.data(data)
@@ -233,7 +233,7 @@
 												x0.domain(data.map(function (d) { return d.Tree; }));
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
 												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
-
+												console.log(d[key])
 												g.selectAll("g")
 													.data(data)
 													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
