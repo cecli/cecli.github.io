@@ -79,7 +79,7 @@
 								d3.csv("/data/knn/fairknn.csv", function (data1) {
 									d3.csv("/data/knn/poorknn.csv", function (data2) {
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
-											d3.csv("/data/data.csv", function (data) {
+											d3.csv("/data/tree_top5_data.csv", function (data) {
 
 												//Define map projection
 												var projection = d3.geo.mercator()
@@ -284,7 +284,6 @@
 												});
 
 												function addDots() {
-													console.log("addDots")
 													//Adding more dots than you can count
 													// svg_map.selectAll("circle")
 													// 	.data(data1)
