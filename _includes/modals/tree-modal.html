@@ -217,11 +217,10 @@
 
 										function update_hist(data_file) {
 											d3.csv(data_file, function (d, i, columns) {
-												console.log(d, i, columns)
 												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 												return d;
 											}, function (error, data) {
-												if (error) throw error;
+												if (error) throw error;												
 
 												var keys = data.columns.slice(1);
 
@@ -229,7 +228,12 @@
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
 												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
 
-												g.selectAll("g")
+												render(data)
+											});
+										}
+
+										function render(data) {
+											g.selectAll("g")
 													.data(data)
 													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
 													.selectAll("rect")
@@ -242,7 +246,6 @@
 													.attr("width", x1.bandwidth())
 													.attr("height", function (d) { return height - y(d.value); })
 													.attr("fill", function (d) { return z(d.key); });
-											});
 										}
 									});
 								</script>
