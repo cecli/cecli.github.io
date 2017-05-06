@@ -96,7 +96,7 @@
                                     var me = svg.selectAll("circle")
                                                .data(root_p)
                                                .enter()
-                                               .append("circle")
+                                               .append("svg:circle")
                                                .attr("cx", function(d, i) {
                                                     console.log(root_p[i])
                                                     return xScale(root_p[i]);
