@@ -114,11 +114,39 @@
 								.demo{
 									float:left;
 								}
+
+								div.tooltip {
+									box-sizing: border-box;
+									display: inline;
+									font-size: 20px;
+									width: 100%;
+									z-index: 10000;
+									line-height: 1;
+									color: rgba(0, 0, 0, 0.8);
+									content: "\25BC";
+									position: absolute;
+									text-align: center;
+								}
+								
+								#tooltip {
+									position: absolute;
+									width: 200px;
+									height: auto;
+									padding: 10px;
+									background-color: white;
+									-webkit-border-radius: 10px;
+									-moz-border-radius: 10px;
+									border-radius: 10px;
+									-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+									-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+									box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+									pointer-events: none;
+								}
 							</style>
 						</head>
 
 						<div id="histogram_div">
-							<div id="inner_hist_div"y>
+							<div id="trees_div"y>
 								<div class="parent">
 									<div id="london_planetree" onclick="londonPlanetree()" class="myButton"><INPUT style="background: url(img/modals/Londonplanetree_resized.jpg) no-repeat">
 										<span id="title1">London Planetree</span> 
@@ -154,6 +182,32 @@
 								</div>
 
 								<script type="text/javascript">
+
+									var trees_tool_div = d3.select("#trees_div").append("div")
+										.attr("class", "tooltip")
+										.style("z-index", 10000)
+										.style("opacity", 0);
+
+									d3.select("#trees_div")
+									  .on("mouseover", function(d){
+										  trees_tool_div.transition()
+																.duration(10)
+																.style("opacity", .9);
+															d3.select(this)
+																.style("opacity", 0.5)
+																.attr("stroke-width", "12px");
+															trees_tool_div.html("<b>" + "d.properties.BoroName "+ "</b>" + "<br>" + "area: " + "boro_area" + " <i>" + "<br>" + "has " + "boro_trees" + "</i> trees")
+																.style("left", (-250) + "px")
+																.style("top", (360) + "px");
+														})
+														.on("mouseout", function (d) {
+															trees_tool_div.transition()
+																.duration(200)
+																.style("opacity", 0);
+															d3.select(this)
+																.style("opacity", .9);
+									  })
+
 									function londonPlanetree() {
 										var demo = document.getElementById('demo');
 										if(demo.innerHTML === ''){
