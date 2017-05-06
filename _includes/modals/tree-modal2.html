@@ -193,10 +193,10 @@
 										  trees_tool_div.transition()
 																.duration(10)
 																.style("opacity", .9);
-															d3.select("#trees_div")
+															d3.select(this)
 																.style("opacity", 1)
 																.attr("stroke-width", "12px");
-															trees_tool_div.html("<b>" + $(".title10").text() + "</b>")
+															trees_tool_div.html("<b>" + "hest" + "</b>")
 																.style("left", (400) + "px")
 																.style("top", (300) + "px");
 														})
@@ -204,7 +204,7 @@
 															trees_tool_div.transition()
 																.duration(200)
 																.style("opacity", 0);
-															d3.select("#trees_div")
+															d3.select(this)
 																.style("opacity", .9);
 									  })
 
