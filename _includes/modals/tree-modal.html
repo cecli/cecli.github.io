@@ -235,12 +235,14 @@
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
 												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key];}); })]).nice();
 
-												g.selectAll("g").remove()
+												g.selectAll("rect").remove()
 												g.selectAll("g")
 													.data(data)
 														.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
 												.selectAll("rect")
 													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
+													.enter()
+													.append("rect")
 													.transition()
 													.duration(1000)
 													.attr("x", function (d) { return x1(d.key); })
