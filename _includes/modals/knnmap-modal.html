@@ -80,8 +80,6 @@
 									d3.csv("/data/knn/poorknn.csv", function (data2) {
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
 											d3.csv("/data/total_nyc_tree_count.csv", function (total_trees_data) {
-
-												console.log(total_trees_data[0].Manhattan)
 												
 												//Define map projection
 												var projection = d3.geo.mercator()
@@ -123,22 +121,22 @@
 															var boro_trees = 0
 															if(d.properties.BoroName == "Manhattan"){
 																boro_area = "59.1 sqkm"
-																boro_trees = total_trees_data.Object.Manhattan
+																boro_trees = total_trees_data[0].Manhattan
 																console.log(boro_trees)
 															} else if (d.properties.BoroName == "Queens"){
 																boro_area = "280 sqkm"
-																boro_trees = total_trees_data.Queens
+																boro_trees = total_trees_data[0].Queens
 															} else if (d.properties.BoroName == "Staten Island"){
 																boro_area = "152 sqkm"
-																boro_trees = total_trees_data.Staten_Island
+																boro_trees = total_trees_data[0].Staten
 															}
 															else if (d.properties.BoroName == "Brooklyn"){
 																boro_area = "180 sqkm"
-																boro_trees = total_trees_data.Brooklyn
+																boro_trees = total_trees_data[0].Brooklyn
 															}
 															else if (d.properties.BoroName == "Bronx"){
 																boro_area = "110 sqkm"
-																boro_trees = total_trees_data.Bronx
+																boro_trees = total_trees_data[0].Bronx
 															}
 															knn_tool_div.transition()
 																.duration(10)
