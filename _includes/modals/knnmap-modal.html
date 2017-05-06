@@ -79,7 +79,9 @@
 								d3.csv("/data/knn/fairknn.csv", function (data1) {
 									d3.csv("/data/knn/poorknn.csv", function (data2) {
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
-											d3.csv("/data/tree_top5_data.csv", function (data) {
+											d3.csv("/data/total_nyc_tree_count.csv", function (total_trees_data) {
+
+
 
 												//Define map projection
 												var projection = d3.geo.mercator()
@@ -117,8 +119,10 @@
 														.style("fill", "steelblue")
 														.on("mouseover", function (d) {
 															var boro_area = ""
+															var boro_trees = 0
 															if(d.properties.BoroName == "Manhattan"){
 																boro_area = "59.1 sqkm"
+																boro_trees = total_trees_data.Manhattan
 															} else if (d.properties.BoroName == "Queens"){
 																boro_area = "280 sqkm"
 															} else if (d.properties.BoroName == "Staten Island"){
