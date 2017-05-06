@@ -122,7 +122,7 @@
 															d3.select(this)
 																.style("opacity", 0.5)
 																.attr("stroke-width", "12px");
-															knn_tool_div.html("<b>" + d.properties.BoroName + "</b>")
+															knn_tool_div.html("<b>" + d.properties.BoroName + "</b>" + "<br>" + "area: " + d.properties.Shape_Area + " <i>" + "d.trees" + "</i> trees")
 																.style("left", (-250) + "px")
 																.style("top", (360) + "px");
 														})
