@@ -110,7 +110,7 @@
 													d3.json("data/geojson/pediacitiesnycneighborhoods.geojson", function (nbh_json) {
 														//Bind data and create one path per GeoJSON feature
 														svg_map.selectAll("path")
-															.data(boro_json.features)
+															.data(nbh_json.features)
 															.enter()
 															.append("path")
 															.attr("d", path)
