@@ -3,7 +3,10 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-body" style="text-align: center;width:inherit;height:inherit">
+      <div class="modal-body" style="text-align: center;width:inherit">
+	  <h1>Top 10 tree species </h1>
+	  <hr class="star-primary">
+	  <p>Click a tree icon to view details about each of the 10 most common trees in NYC. </p>
         <html lang="en">
 
         <head>
@@ -98,22 +101,17 @@
 				width: 1100px;
 				top: 150px;
 			}
-			
-
 			.parent {
 				width:600px;
 				height:300px;
 				position: relative;
 			}
-			
 			.demo{
 				float:left;
 			}
           </style>
         </head>
 
-        <h1>Top 10 tree species </h1>
-		<p>Click a tree icon to view details about each of the 10 most common trees in NYC. </p>
 		<div class="parent">
 			<div id="london_planetree" onclick="londonPlanetree()" class="myButton"><INPUT style="background: url(img/modals/Londonplanetree_resized.jpg) no-repeat">
 				<span id="title1">London Planetree</span> 
@@ -162,6 +160,7 @@
 				'<br>'+
 				'<ul>'+
 					'<li>London planetree is the most common tree in NYC </li>'+
+					'<hr class="star-primary">'+
 					'<li>It is a hybrid tree discovered in London in 17th century</li>'+
 					'<li>It is only the 6th most common tree in Manhattan</li>'+
 					'<li>In 1995 it was only the second most common tree in NYC, in spite of having 1,026 more trees </li>'+
