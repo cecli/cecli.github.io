@@ -240,7 +240,7 @@
 														.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
 												.selectAll("rect")
 													//.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key] }; }); })
-													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key]}; }); })
+													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
 													.transition()
 													.duration(1000)
 													.attr("x", function (d) { return x1(d.key); })
