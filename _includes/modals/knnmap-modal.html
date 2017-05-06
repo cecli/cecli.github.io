@@ -83,7 +83,7 @@
 												
 												//Define map projection
 												var projection = d3.geo.mercator()
-													.center([-73.9241, 40.712784]) //[e/w, n/s]
+													.center([-73.9541, 40.712784]) //[e/w, n/s]
 													.translate([w / 2, h / 2])
 													.scale([67000]);
 
@@ -102,7 +102,7 @@
 												//Adding background to svg
 												svg_map.append('rect')
 													.attr("class", "background")
-													.attr("width", "1400")
+													.attr("width", "1300")
 													.attr("height", "900")
 
 												//Load in GeoJSON data
