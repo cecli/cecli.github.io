@@ -189,7 +189,7 @@
 										.style("opacity", 0);
 
 									function onImageHover(treeType){
-										d3.select("#tree_parent")
+										d3.selectAll("#title1, #title2, #title3, #title4, #title5, #title6, #title7, #title8, #title9, #title10")
 											.on("mouseover", function (d) {
 															trees_tool_div.transition()
 																.duration(10)
@@ -198,8 +198,8 @@
 																.style("opacity", 1)
 																.attr("stroke-width", "12px");
 															trees_tool_div.html("<b>" + treeType + "</b>")
-																.style("left", (-250) + "px")
-																.style("top", (360) + "px");
+																.style("left", (200) + "px")
+																.style("top", (4000) + "px");
 														})
 														.on("mouseout", function (d) {
 															trees_tool_div.transition()
