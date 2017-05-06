@@ -190,6 +190,26 @@
 
 									function onImageHover(treeType){
 										console.log(treeType)
+
+										d3.select("#tree_parent")
+											.on("mouseover", function (d) {
+															trees_tool_div.transition()
+																.duration(10)
+																.style("opacity", .9);
+															d3.select(this)
+																.style("opacity", 0.5)
+																.attr("stroke-width", "12px");
+															trees_tool_div.html("<b>" + treeTypeo + "</b>")
+																.style("left", (-250) + "px")
+																.style("top", (360) + "px");
+														})
+														.on("mouseout", function (d) {
+															trees_tool_div.transition()
+																.duration(200)
+																.style("opacity", 0);
+															d3.select(this)
+																.style("opacity", .9);
+														});
 									}
 
 									function londonPlanetree() {
