@@ -229,12 +229,7 @@
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
 												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
 
-												btnRender(data)
-											});
-										}
-
-										function btnRender(data) {
-											g.selectAll("g")
+												g.selectAll("g")
 													.data(data)
 													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
 													.selectAll("rect")
@@ -247,6 +242,13 @@
 													.attr("width", x1.bandwidth())
 													.attr("height", function (d) { return height - y(d.value); })
 													.attr("fill", function (d) { return z(d.key); });
+
+												//btnRender(data)
+											});
+										}
+
+										function btnRender(data) {
+											
 										}
 									});
 								</script>
