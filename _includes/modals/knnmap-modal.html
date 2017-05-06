@@ -119,6 +119,16 @@
 															var boro_area = ""
 															if(d.properties.BoroName == "Manhattan"){
 																boro_area = "59.1 sqkm"
+															} else if (d.properties.BoroName == "Queens"){
+																boro_area = "280 sqkm"
+															} else if (d.properties.BoroName == "Staten Island"){
+																boro_area = "152 sqkm"
+															}
+															else if (d.properties.BoroName == "Brooklyn"){
+																boro_area = "180 sqkm"
+															}
+															else if (d.properties.BoroName == "Bronx"){
+																boro_area = "110 sqkm"
 															}
 															knn_tool_div.transition()
 																.duration(10)
