@@ -116,6 +116,7 @@
 														.attr("d", path)
 														.style("fill", "steelblue")
 														.on("mouseover", function (d) {
+															console.log(total_trees_data)
 															var boro_area = ""
 															var boro_trees = 0
 															if(d.properties.BoroName == "Manhattan"){
