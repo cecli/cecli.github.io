@@ -216,7 +216,7 @@
 
 										function update_hist(data_file) {
 											console.log(data_file)
-											d3.csv("data2005.csv", function (d, i, columns) {
+											d3.csv(data_file, function (d, i, columns) {
 												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 												return d;
 											}, function (error, data) {
