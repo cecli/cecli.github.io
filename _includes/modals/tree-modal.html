@@ -103,6 +103,7 @@
 										return d;
 									}, function (error, data) {
 										if (error) throw error;
+										console.log("first: " + data)
 
 										var keys = data.columns.slice(1);
 										console.log(keys)
@@ -222,7 +223,8 @@
 												// for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 												// return d;
 											}, function (error, data) {
-												if (error) throw error;												
+												if (error) throw error;	
+												console.log("second: " + data)											
 
 												var keys = ["NYC", "Bronx", "Brooklyn", "Staten Island", "Manhattan", "Queens"];
 												console.log(keys)
