@@ -234,19 +234,19 @@
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
 												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key];}); })]).nice();
 
-												g.selectAll("g")
+												g.append("svg")
+													.selectAll("g")
 													.data(data)
+													.enter().append("g")
 													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
 													.selectAll("rect")
-													//.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key] }; }); })
 													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
-													.transition()
-													.duration(1000)
+													.enter().append("rect")
 													.attr("x", function (d) { return x1(d.key); })
 													.attr("y", function (d) { return y(d.value); })
 													.attr("width", x1.bandwidth())
-													.attr("height", function (d) { return (height - y(d.value)) / 2; })
-													.attr("fill", function (d) { return z(d.key); });
+													.attr("height", function (d) { return height - y(d.value); })
+													.attr("fill", function (d) { return z(d.key); })
 
 												//btnRender(data)
 											});
