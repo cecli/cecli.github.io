@@ -80,10 +80,10 @@
 									d3.csv("/data/knn/poorknn.csv", function (data2) {
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
 											d3.csv("/data/total_nyc_tree_count.csv", function (total_trees_data) {
-												console.log(total_trees_data)
+												
 												//Define map projection
 												var projection = d3.geo.mercator()
-													.center([-73.7541, 40.712784]) //[e/w, n/s]
+													.center([-73.6541, 40.712784]) //[e/w, n/s]
 													.translate([w / 2, h / 2])
 													.scale([67000]);
 
