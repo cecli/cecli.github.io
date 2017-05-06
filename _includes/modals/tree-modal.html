@@ -98,7 +98,6 @@
 										.style("opacity", 0);
 
 									d3.csv("/data/tree_top5_data.csv", function (d, i, columns) {
-										console.log(d, i, columns)
 										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 										return d;
 									}, function (error, data) {
@@ -228,11 +227,11 @@
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
 												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
 
-												render(data)
+												btnRender(data)
 											});
 										}
 
-										function render(data) {
+										function btnRender(data) {
 											g.selectAll("g")
 													.data(data)
 													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
