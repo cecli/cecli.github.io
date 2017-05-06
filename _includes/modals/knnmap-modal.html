@@ -53,6 +53,10 @@
 									box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
 									pointer-events: none;
 								}
+
+								b.boro {
+									font-size: 26px;
+								}
 							</style>
 						</head>
 
@@ -148,7 +152,7 @@
 																d3.select(this)
 																	.style("opacity", 0.5)
 																	.attr("stroke-width", "12px");
-																knn_tool_div.html("<b style=\"font-size:28px\">" + "Borough: " + d.properties.borough + "</b>" + "<br>" + "Area: " + boro_area + "<br>" + "has " + boro_trees + " trees" +
+																knn_tool_div.html("<b class=\"boro\">" + "Borough: " + d.properties.borough + "</b>" + "<br>" + "Area: " + boro_area + "<br>" + "has " + boro_trees + " trees" +
 																	"<br>" + "of which " + boro_health_perc + "% are in good health" + "<br><br>" + "<b><i>" + "Neighborhood: " + d.properties.neighborhood + "</i></b>")
 																	.style("left", (-300) + "px")
 																	.style("top", (360) + "px");
