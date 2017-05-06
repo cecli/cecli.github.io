@@ -246,7 +246,7 @@
 													.attr("x", function (d) { return x1(d.key); })
 													.attr("y", function (d) { return y(parseInt(d.value)); })
 													.attr("width", x1.bandwidth())
-													.attr("height", function (d) { return height - y(d.value); })
+													.attr("height", function (d) { return height - y(parseInt(d.value)); })
 													.attr("fill", function (d) { return z(d.key); });
 
 												//btnRender(data)
