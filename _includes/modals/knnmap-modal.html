@@ -192,23 +192,35 @@
 																			boro_good_health_perc = total_trees_data[0].Manhattan_Good_Perc
 																			boro_poor_health = total_trees_data[0].Manhattan_Poor
 																		} else if (d.properties.BoroName == "Queens") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + " " + tree_top5_data[i].Queens;
+																			}
 																			boro_area = "280 sqkm"
 																			boro_trees = total_trees_data[0].Queens_Total
 																			boro_good_health_perc = total_trees_data[0].Queens_Good_Perc
 																			boro_poor_health = total_trees_data[0].Queens_Poor
 																		} else if (d.properties.BoroName == "Staten Island") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + " " + tree_top5_data[i].Staten;
+																			}
 																			boro_area = "152 sqkm"
 																			boro_trees = total_trees_data[0].Staten_Total
 																			boro_good_health_perc = total_trees_data[0].Staten_Good_Perc
 																			boro_poor_health = total_trees_data[0].Staten_Poor
 																		}
 																		else if (d.properties.BoroName == "Brooklyn") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + " " + tree_top5_data[i].Brooklyn;
+																			}
 																			boro_area = "180 sqkm"
 																			boro_trees = total_trees_data[0].Brooklyn_Total
 																			boro_good_health_perc = total_trees_data[0].Brooklyn_Good_Perc
 																			boro_poor_health = total_trees_data[0].Brooklyn_Poor
 																		}
 																		else if (d.properties.BoroName == "Bronx") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + " " + tree_top5_data[i].Bronx;
+																			}
 																			boro_area = "110 sqkm"
 																			boro_trees = total_trees_data[0].Bronx_Total
 																			boro_good_health_perc = total_trees_data[0].Bronx_Good_Perc
