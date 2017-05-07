@@ -19,7 +19,7 @@
 								<div id="pieChart"></div>
 								<div id="pieChart2"></div>
 								<script type="text\javascript">
-									$(document).ready(function() {									
+									(function() {									
 										var pie = new d3pie("pieChart", {
 											"header": {
 												"title": {
@@ -232,7 +232,7 @@
 											},
 											"callbacks": {}
 										});
-										})
+										})();
 									
 								</script>
 							</div>
