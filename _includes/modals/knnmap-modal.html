@@ -87,9 +87,9 @@
 												d3.csv("/data/boro_total_trees.csv", function (boro_total_trees) {
 													//Define map projection
 													var projection = d3.geo.mercator()
-														.center([-73.9541, 40.712784]) //[e/w, n/s]
+														.center([-73.7541, 40.712784]) //[e/w, n/s]
 														.translate([w / 2, h / 2])
-														.scale([67000]);
+														.scale([70000]);
 
 													//Define path generator
 													var path = d3.geo.path()
