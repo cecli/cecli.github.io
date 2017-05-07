@@ -38,7 +38,7 @@
 									text-align: center;
 								}
 								
-								#tooltip {
+								#hist_tooltip {
 									position: absolute;
 									width: 200px;
 									height: auto;
@@ -93,8 +93,7 @@
 
 									// Define the div for the tooltip
 									var hist_tool_div = d3.select("#inner_hist_div").append("div")
-										.attr("class", "tooltip")
-										.style("left", 200 + "px")
+										.attr("class", "hist_tooltip")
 										.style("z-index", 10000)
 										.style("opacity", 0);
 
