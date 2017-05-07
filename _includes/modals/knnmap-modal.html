@@ -78,7 +78,8 @@
 								var knn_tool_div = d3.select("#map_div").append("div")
 									.attr("class", "tooltip")
 									.style("z-index", 10000)
-									.style("opacity", 0);
+									.style("opacity", 0)
+									.style("position: relative");
 
 								d3.csv("/data/knn/fairknn.csv", function (data1) {
 									d3.csv("/data/knn/poorknn.csv", function (data2) {
