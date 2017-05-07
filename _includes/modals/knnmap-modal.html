@@ -108,7 +108,7 @@
 
 												color.domain([
 													d3.min(total_trees_data, function(d) { return d.NYC; }), 
-													d3.max(total_trees_data, function(d) { return d.NYC; })
+													d3.max(total_trees_data, function(d) {console.log(d.NYC); return d.NYC; })
 												]);							
 
 												//Adding background to svg
@@ -131,9 +131,7 @@
 																var value = total_trees_data[0].NYC;
 																
 																if (value) {
-																	console.log(value)
 																	//If value exists…
-																	console.log(color(value))
 																	return color(value);
 																} else {
 																	//If value is undefined…
