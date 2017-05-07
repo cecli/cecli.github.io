@@ -148,7 +148,7 @@
 
 																//Bind data and create one path per GeoJSON feature
 																svg_map.selectAll("path")
-																	.data(nbh_json.features)
+																	.data(boro_json.features)
 																	.enter()
 																	.append("path")
 																	.attr("d", path)
