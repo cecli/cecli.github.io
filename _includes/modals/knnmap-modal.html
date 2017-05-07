@@ -128,10 +128,12 @@
 															.attr("d", path)
 															.style("fill", function(d) {
 																//Get data value
-																var value = 10;
+																var value = total_trees_data[0].NYC;
 																
 																if (value) {
+																	console.log(value)
 																	//If value exists…
+																	console.log(color(value))
 																	return color(value);
 																} else {
 																	//If value is undefined…
