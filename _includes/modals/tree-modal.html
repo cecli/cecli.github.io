@@ -39,7 +39,7 @@
 								}
 								
 								#hist_tooltip {
-									position: absolute;
+									position: relative;
 									width: 200px;
 									height: auto;
 									padding: 10px;
@@ -210,8 +210,6 @@
 													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
 													update_hist(data_file)
 												};
-
-
 											});
 
 										function update_hist(data_file) {
