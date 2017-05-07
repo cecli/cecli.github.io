@@ -133,7 +133,7 @@
 																	//Find the corresponding state inside the GeoJSON
 																	for (var j = 0; j < boro_json.features.length; j++) {
 
-																		var jsonState = boro_json.features[j].properties.Boro;
+																		var jsonState = boro_json.features[j].properties.BoroName;
 
 																		if (dataDis == jsonState) {
 
@@ -155,7 +155,6 @@
 																	.style("fill", function (d) {
 																		//Get data value
 																		var value = d.properties.Count;
-																		console.log(value)
 
 																		if (value) {
 																			//If value exists…
