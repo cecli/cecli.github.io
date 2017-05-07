@@ -168,25 +168,25 @@
 																	var boro_area = ""
 																	var boro_trees = 0
 																	var boro_health_perc = 0
-																	if (d.properties.borough == "Manhattan") {
+																	if (d.properties.BoroName == "Manhattan") {
 																		boro_area = "59.1 sqkm"
 																		boro_trees = total_trees_data[0].Manhattan_Total
 																		boro_health_perc = total_trees_data[0].Manhattan_Good_Perc
-																	} else if (d.properties.borough == "Queens") {
+																	} else if (d.properties.BoroName == "Queens") {
 																		boro_area = "280 sqkm"
 																		boro_trees = total_trees_data[0].Queens_Total
 																		boro_health_perc = total_trees_data[0].Queens_Good_Perc
-																	} else if (d.properties.borough == "Staten Island") {
+																	} else if (d.properties.BoroName == "Staten Island") {
 																		boro_area = "152 sqkm"
 																		boro_trees = total_trees_data[0].Staten_Total
 																		boro_health_perc = total_trees_data[0].Staten_Good_Perc
 																	}
-																	else if (d.properties.borough == "Brooklyn") {
+																	else if (d.properties.BoroName == "Brooklyn") {
 																		boro_area = "180 sqkm"
 																		boro_trees = total_trees_data[0].Brooklyn_Total
 																		boro_health_perc = total_trees_data[0].Brooklyn_Good_Perc
 																	}
-																	else if (d.properties.borough == "Bronx") {
+																	else if (d.properties.BoroName == "Bronx") {
 																		boro_area = "110 sqkm"
 																		boro_trees = total_trees_data[0].Bronx_Total
 																		boro_health_perc = total_trees_data[0].Bronx_Good_Perc
@@ -197,7 +197,7 @@
 																	d3.select(this)
 																		.style("opacity", 0.5)
 																		.attr("stroke-width", "12px");
-																	knn_tool_div.html("<b class=\"boro\">" + "Borough: " + d.properties.borough + "</b>" + "<br>" + "Area: " + boro_area + "<br>" + "has " + boro_trees + " trees" +
+																	knn_tool_div.html("<b class=\"boro\">" + "Borough: " + d.properties.BoroName + "</b>" + "<br>" + "Area: " + boro_area + "<br>" + "has " + boro_trees + " trees" +
 																		"<br>" + "of which " + boro_health_perc + "% are in good health" + "<br><br>" + "<b><i>" + "Neighborhood: " + d.properties.neighborhood + "</i></b>")
 																		.style("left", (-300) + "px")
 																		.style("top", (360) + "px");
