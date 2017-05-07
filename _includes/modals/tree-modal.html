@@ -95,6 +95,7 @@
 									var hist_tool_div = d3.select("#inner_hist_div").append("div")
 										.attr("class", "hist_tooltip")
 										.style("z-index", 10000)
+										.style("top: 200px")
 										.style("opacity", 0);
 
 									d3.csv("/data/tree_top5_data.csv", function (d, i, columns) {
