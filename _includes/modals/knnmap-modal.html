@@ -103,6 +103,7 @@
 															.attr("height", 800)
 															.style("position", "relative")
 															.style("width", "100%")
+															imgUrl = "http://thedali.org/wp-content/uploads/2015/04/main_feature_image.png";
 
 														var color = d3.scale.quantize()
 															.range(['rgb(214, 245, 214)','rgb(173, 235, 173)','rgb(132, 225, 132)','rgb(91, 215, 91)','rgb(50, 205, 50)','rgb(40, 164, 40)','rgb(30, 123, 30)','rgb(20, 82, 20)'])
@@ -112,12 +113,24 @@
 															d3.max(boro_total_trees, function (d) { return d.Count; })
 														]);
 
+														svg_map.append("defs")
+															.append("pattern")
+															.attr("id", "venus")
+															.attr('patternUnits', 'userSpaceOnUse')
+															.attr("width", max.x)
+															.attr("height", max.y)
+															.append("image")
+															.attr("xlink:href", imgUrl)
+															.attr("width", max.x)
+															.attr("height", max.y);
+
 														//Adding background to svg
 														svg_map.append('rect')
 															.attr("class", "background")
-															.attr("fill", "url(img/modals/awesome_tree.png)")
 															.attr("width", "1300")
 															.attr("height", "1100")
+															.attr("fill", "url(#venus)");
+
 
 														//Load in GeoJSON data
 														d3.json("data/geojson/boroughs.geojson", function (boro_json) {
