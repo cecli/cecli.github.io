@@ -71,7 +71,7 @@
 							<script type="text/javascript">
 								//Width and height
 								var w = 1700;
-								var h = 900;
+								var h = 1000;
 
 								//Tooltip
 								var knn_tool_div = d3.select("#map_div").append("div")
@@ -86,9 +86,9 @@
 												d3.csv("/data/boro_total_trees.csv", function (boro_total_trees) {
 													//Define map projection
 													var projection = d3.geo.mercator()
-														.center([-74.0541, 40.712784]) //[e/w, n/s]
+														.center([-74.0841, 40.712784]) //[e/w, n/s]
 														.translate([w / 2, h / 2])
-														.scale([71000]);
+														.scale([72000]);
 
 													//Define path generator
 													var path = d3.geo.path()
