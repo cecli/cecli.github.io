@@ -108,8 +108,8 @@
 															.range(['rgb(20, 82, 20)','rgb(30, 123, 30)','rgb(40, 164, 40)','rgb(50, 205, 50)','rgb(91, 215, 91)','rgb(132, 225, 132)','rgb(173, 235, 173)','rgb(214, 245, 214)'])
 
 														color.domain([
-															d3.min(nbh_trees, function (d) { return d.Count; }),
-															d3.max(nbh_trees, function (d) { return d.Count; })
+															d3.min(boro_total_trees, function (d) { return d.Count; }),
+															d3.max(boro_total_trees, function (d) { return d.Count; })
 														]);
 
 														//Adding background to svg
@@ -122,23 +122,23 @@
 														d3.json("data/geojson/boroughs.geojson", function (boro_json) {
 															d3.json("data/geojson/pediacitiesnycneighborhoods.geojson", function (nbh_json) {
 
-																for (var i = 0; i < nbh_trees.length; i++) {
+																for (var i = 0; i < boro_total_trees.length; i++) {
 
 																	//Grab district name
-																	var dataDis = nbh_trees[i].Nbh;
+																	var dataDis = boro_total_trees[i].BoroName;
 
 																	//Grab data value, and convert from string to float
-																	var dataValue = parseFloat(nbh_trees[i].Count);
+																	var dataValue = parseFloat(boro_total_trees[i].Count);
 
 																	//Find the corresponding state inside the GeoJSON
-																	for (var j = 0; j < nbh_json.features.length; j++) {
+																	for (var j = 0; j < boro_json.features.length; j++) {
 
-																		var jsonState = nbh_json.features[j].properties.neighborhood;
+																		var jsonState = boro_json.features[j].properties.BoroName;
 
 																		if (dataDis == jsonState) {
 
 																			//Copy the data value into the JSON
-																			nbh_json.features[j].properties.Count = dataValue;
+																			boro_json.features[j].properties.Count = dataValue;
 
 																			//Stop looking through the JSON
 																			break;
