@@ -125,7 +125,7 @@
 																for (var i = 0; i < boro_total_trees.length; i++) {
 
 																	//Grab district name
-																	var dataDis = boro_total_trees[i].BoroName;
+																	var dataDis = boro_total_trees[i].Boro;
 
 																	//Grab data value, and convert from string to float
 																	var dataValue = parseFloat(boro_total_trees[i].Count);
@@ -133,7 +133,7 @@
 																	//Find the corresponding state inside the GeoJSON
 																	for (var j = 0; j < boro_json.features.length; j++) {
 
-																		var jsonState = boro_json.features[j].properties.BoroName;
+																		var jsonState = boro_json.features[j].properties.Boro;
 
 																		if (dataDis == jsonState) {
 
