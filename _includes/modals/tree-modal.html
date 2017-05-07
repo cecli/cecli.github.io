@@ -27,7 +27,7 @@
 							<style type="text/css">
 								div.tooltip {
 									box-sizing: border-box;
-									display: inline-block;
+									display: inline;
 									font-size: 20px;
 									width: 100%;
 									z-index: 10000;
@@ -92,7 +92,7 @@
 										.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 									// Define the div for the tooltip
-									var hist_tool_div = d3.select("#inner_hist_div").append("div")
+									var hist_tool_div = d3.select("#histogram_div").append("div")
 										.attr("class", "hist_tooltip")
 										.style("z-index", 10000)
 										.style("opacity", 0);
