@@ -22,7 +22,6 @@
 							<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
 							<style type="text/css">
 								.background {
-									fill: #eee;
 									pointer-events: all;
 								}
 								
@@ -103,7 +102,7 @@
 															.attr("height", 800)
 															.style("position", "relative")
 															.style("width", "100%")
-															imgUrl = "https://10mosttoday.com/wp-content/uploads/2013/07/Sagano_Bamboo_forest.jpg";
+															imgUrl = "https://media.timeout.com/images/103451632/image.jpg";
 
 														var color = d3.scale.quantize()
 															.range(['rgb(214, 245, 214)','rgb(173, 235, 173)','rgb(132, 225, 132)','rgb(91, 215, 91)','rgb(50, 205, 50)','rgb(40, 164, 40)','rgb(30, 123, 30)','rgb(20, 82, 20)'])
@@ -118,11 +117,12 @@
 															.attr("id", "venus")
 															.attr('patternUnits', 'userSpaceOnUse')
 															.attr("width", "1300")
-															.attr("height", "1100")
+															.attr("height", "1300")
 															.append("image")
 															.attr("xlink:href", imgUrl)
-															.attr("width", "1300")
-															.attr("height", "1100");
+																.attr("width", "1300")
+																.attr("height", "900")
+																.style("opacity", 0.5);
 
 														//Adding background to svg
 														svg_map.append('rect')
@@ -212,7 +212,7 @@
 																		}
 																		knn_tool_div.transition()
 																			.duration(10)
-																			.style("opacity", .9);
+																			.style("opacity", 1);
 																		d3.select(this)
 																			.style("opacity", 0.5)
 																			.attr("stroke-width", "12px");
@@ -227,7 +227,7 @@
 																			.duration(200)
 																			.style("opacity", 0);
 																		d3.select(this)
-																			.style("opacity", .9);
+																			.style("opacity", 1);
 																	});
 
 																addDots();
