@@ -1343,7 +1343,7 @@ var segments = {
 			.style("stroke", segmentStroke)
 			.style("stroke-width", 1)
 			.transition()
-			.ease(d3.easeCubicInOut)
+			.ease(d3.easeCubicInOut())
 			.duration(loadSpeed)
 			.attr("data-index", function(d, i) { return i; })
 			.attrTween("d", function(b) {
