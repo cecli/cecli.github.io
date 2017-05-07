@@ -61,7 +61,7 @@
 
 						<h4 class="Description" id="KnnSelection" margin-left="100px">
 							<!-- What you are actually visualizing. Will change on click of buttons -->
-							You are now visualizing: Poor trees
+							Click a button to see the KNN results of predicting tree health based on GPS locations.
 						</h4>
 						<button type="button"><p id="poordata">Show poor</p></button>
 						<button type="button"><p id="fairdata">Show fair</p></button>
@@ -301,33 +301,6 @@
 															});
 
 															function addDots() {
-																//Adding more dots than you can count
-																// svg_map.selectAll("circle")
-																// 	.data(data1)
-																// 	.enter()
-																// 	.append("circle")
-																// 	.attr("cx", function (d) {
-																// 		return projection([d.lon, d.lat])[0];
-																// 	})
-																// 	.attr("cy", function (d) {
-																// 		return projection([d.lon, d.lat])[1];
-																// 	})
-																// 	.attr("r", 1.5)
-																// 	.style("fill", "orange")
-																// 	.style("opacity", 0.9);
-																// svg_map.selectAll("circle")
-																// 	.data(data2)
-																// 	.enter()
-																// 	.append("circle")
-																// 	.attr("cx", function (d) {
-																// 		return projection([d.lon, d.lat])[0];
-																// 	})
-																// 	.attr("cy", function (d) {
-																// 		return projection([d.lon, d.lat])[1];
-																// 	})
-																// 	.attr("r", 1.5)
-																// 	.style("fill", "red")
-																// 	.style("opacity", 0.9);
 																svg_map.selectAll("circle")
 																	.data(data2)
 																	.enter()
