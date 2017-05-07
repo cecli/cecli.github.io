@@ -41,7 +41,6 @@
 								#hist_tooltip {
 									position: absolute;
 									width: 200px;
-									top: 200px;
 									height: auto;
 									padding: 10px;
 									background-color: white;
@@ -132,7 +131,7 @@
 													.attr("stroke-width", "10px");
 												hist_tool_div.html("<b>" + d.key + "</b>" + "<br>" + d.value + " <i>" + d.trees + "</i> trees")
 													.style("left", (0) + "px")
-													.style("top", (290) + "px");
+													.style("top", (0) + "px");
 											})
 											.on("mouseout", function (d) {
 												hist_tool_div.transition()
