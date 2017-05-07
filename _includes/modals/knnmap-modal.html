@@ -84,7 +84,7 @@
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
 											d3.csv("/data/total_nyc_tree_count.csv", function (total_trees_data) {
 												d3.csv("/data/boro_total_trees.csv", function (boro_total_trees) {
-													d3.csv("/data/nbh_trees.csv", function (nbh_trees) {
+													d3.csv("/data/tree_top5_data.csv", function (tree_top5_data) {
 														//Define map projection
 														var projection = d3.geo.mercator()
 															.center([-74.0941, 40.732784]) //[e/w, n/s]
@@ -182,7 +182,9 @@
 																		var boro_area = ""
 																		var boro_trees = 0
 																		var boro_good_health_perc = 0
+																		var top5 = ""
 																		if (d.properties.BoroName == "Manhattan") {
+																			top5 = tree_top5_data[0].Manhattan
 																			boro_area = "59.1 sqkm"
 																			boro_trees = total_trees_data[0].Manhattan_Total
 																			boro_good_health_perc = total_trees_data[0].Manhattan_Good_Perc
@@ -218,7 +220,8 @@
 																			.attr("stroke-width", "12px");
 																		knn_tool_div.html("<b class=\"boro\">" + "Borough: " + d.properties.BoroName + "</b>" + "<br>" + "Area: " + boro_area + "<br>" + "has " + boro_trees + " trees" +
 																			"<br>" + "of which " + boro_good_health_perc + "% are in <font color=\"green\">good</font> health" + "<br>" + 
-																			"and " + (100 - boro_good_health_perc).toFixed(2) + "% of trees are in <font color=\"red\">poor</font> health" +  "<br><br>" + "<b><i>" + "</b>")
+																			"and " + (100 - boro_good_health_perc).toFixed(2) + "% of trees are in <font color=\"red\">poor</font> health" +  "<br><br>" + "<b><i>" + "</b>" +
+																			"<br><br>" + "The top 5 trees in each borough are: " + "<br>" + top5)
 																			.style("left", (50) + "px")
 																			.style("top", (360) + "px");
 																	})
@@ -229,8 +232,6 @@
 																		d3.select(this)
 																			.style("opacity", 1);
 																	});
-
-																//addDots();
 
 																d3.selectAll("p")
 																	.on("click", function () {
