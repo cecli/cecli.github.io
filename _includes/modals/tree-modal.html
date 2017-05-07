@@ -213,19 +213,9 @@
 											});
 
 										function update_hist(data_file) {
-											d3.csv(data_file, function (d) {
-												console.log(tree_data)
-												// for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
-												// return d;
-												return {
-													trees: d.Tree,
-													nyc: d.NYC,
-													bronx: d.Bronx,
-													brooklyn: d.Brooklyn,
-													queens: d.Queens,
-													manhattan: d.Manhattan,
-													staten: d.StatenIsland
-												}
+											d3.csv(data_file, function (d, i, columns) {
+												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
+												return d;
 											}, function (error, data) {
 												if (error) throw error;											
 
