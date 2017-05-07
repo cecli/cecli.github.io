@@ -1311,7 +1311,7 @@ var segments = {
 			.attr("transform", function() { return math.getPieTranslateCenter(pieCenter); })
 			.attr("class", pie.cssPrefix + "pieChart");
 
-		var arc = d3.arc()
+		var arc = d3.svg.arc()
 			.innerRadius(pie.innerRadius)
 			.outerRadius(pie.outerRadius)
 			.startAngle(0)
