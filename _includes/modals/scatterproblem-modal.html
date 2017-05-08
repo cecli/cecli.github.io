@@ -113,6 +113,15 @@
                                                 .attr("opacity", ".4");
 
 
+                                    //Define clipping path
+                                    svg_scatter.append("clipPath")                 //Make a new clipPath
+                                        .attr("id", "chart-area")           //Assign an ID
+                                        .append("rect")                     //Within the clipPath, create a new rect
+                                        .attr("x", padding)                 //Set rect's position and size…
+                                        .attr("y", padding)
+                                        .attr("width", w - padding * 3)
+                                        .attr("height", h - padding * 3);
+
 
                                     //Create X axis
                                     svg_scatter.append("g")
