@@ -117,7 +117,6 @@
 								                });
 								            };
 								            key_new = keys.splice(0,1)
-								            console.log(keys);
 								            load_data(data, keys);
 									});
 
@@ -242,9 +241,6 @@
 
 									function update_hist(data_file) {
 										d3.csv(data_file, function (data, i, columns) {
-											console.log("ciaone")
-
-											//console.log(columns.length)
 											return iter_file(d, i, columns);
 										}, function (error, data) {
 											if (error) throw error;											
@@ -271,7 +267,6 @@
 								                });
 								            };
 								            key_new = keys.splice(0,1)
-								            //console.log(keys);
 								            update_data(data, keys);
 									    });
 									}
@@ -298,8 +293,6 @@
 
 									function iter_file(d, i, columns){
 										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
-											console.log("ciao");
-											console.log(d);
 										return d;
 									}
 								</script>

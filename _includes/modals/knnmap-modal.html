@@ -81,6 +81,7 @@
 								//Width and height
 								var w = 1700;
 								var h = 1100;
+								var btnCheck = 0;
 
 								//Tooltip
 								var knn_tool_div = d3.select("#map_div").append("div")
@@ -137,8 +138,38 @@
 														svg_map.append('rect')
 															.attr("class", "background")
 															.attr("width", "1300")
-															.attr("height", "1100")
-															.attr("fill", "url(#venus)");														
+															.attr("height", "1000")
+															.attr("fill", "url(#venus)");	
+
+														var map_legend = svg_map.append("g")
+															.attr("font-family", "sans-serif")
+															.attr("font-size", 14)
+															.attr("text-anchor", "end")
+															.selectAll("g")
+															.data(["Good","Fair","Poor"])
+															.enter().append("g")
+															.attr("transform", function (d, i) { return "translate(" + 200 + "," + i * 20 + ")"; });													
+
+														map_legend.append("rect")
+															.attr("x", width - 19)
+															.attr('y', 20)
+															.attr("width", 19)
+															.attr("height", 19)
+															.attr("fill", function(d){
+																if (d == "Good"){
+																	return "aqua";
+																} else if (d == "Fair"){
+																	return "orange";
+																} else if (d == "Poor"){
+																	return "red";
+																}
+															});
+
+														map_legend.append("text")
+															.attr("x", width - 24)
+															.attr("y", 29)
+															.attr("dy", "0.32em")
+															.text(function (d) { return d; });
 
 														//Load in GeoJSON data
 														d3.json("data/geojson/boroughs.geojson", function (boro_json) {
@@ -261,25 +292,32 @@
 																		var des = document.getElementById("KnnSelection")
 
 																		if (bttnID == "alldata") {
-																			svg_map.selectAll("circle")
-																				.data(data1)
-																				.enter()
-																				.append("circle")
-																				.attr("cx", function (d) {
-																					return projection([d.lon, d.lat])[0];
-																				})
-																				.attr("cy", function (d) {
-																					return projection([d.lon, d.lat])[1];
-																				})
-																				.attr("r", 1.2)
-																				.style("fill", "orange")
-																				.style("opacity", 0.9);
+																			// svg_map.selectAll("circle")
+																			// 	.data(data1)
+																			// 	.enter()
+																			// 	.append("circle")
+																			// 	.attr("id", "fairdots")
+																			// 	.attr("cx", function (d) {
+																			// 		return projection([d.lon, d.lat])[0];
+																			// 	})
+																			// 	.attr("cy", function (d) {
+																			// 		return projection([d.lon, d.lat])[1];
+																			// 	})
+																			// 	.attr("r", 1.2)
+																			// 	.style("fill", "orange")
+																			// 	.style("opacity", 0.9);
 																			//changing the text saying what we are currently visualizing
+																			btnCheck = 1;
 																			addDots(data1, data2, data3)
-																			KnnSelection.innerHTML = "Fair health"
+																			KnnSelection.innerHTML = "All health types"
 																			document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
 																		}
 																		else if (bttnID == "healthdata") {
+																			 if(btnCheck==1){
+																			 	svg_map.selectAll("circle").remove()
+																				addDots(data1, data2, data3);
+																			 }
+																			 
 																			 svg_map.selectAll("circle")
 																			 	.style("visibility", "visible");
 																			//changing the text saying what we are currently visualizing
