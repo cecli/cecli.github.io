@@ -39,7 +39,7 @@
 								}
 								
 								#tooltip {
-									position: absolute;
+									position: relative;
 									width: 200px;
 									height: auto;
 									padding: 10px;
@@ -107,8 +107,8 @@
 
 										x0.domain(data.map(function (d) { return d.Tree; }));
 										x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-										y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
-
+										y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key];}); })]).nice();
+										
 										g.append("svg")
 											.selectAll("g")
 											.data(data)
@@ -130,8 +130,8 @@
 													.style("opacity", 0.5)
 													.attr("stroke-width", "10px");
 												hist_tool_div.html("<b>" + d.key + "</b>" + "<br>" + d.value + " <i>" + d.trees + "</i> trees")
-													.style("left", (0) + "px")
-													.style("top", (290) + "px");
+													.style("left", (180) + "px")
+													.style("top", (260) + "px");
 											})
 											.on("mouseout", function (d) {
 												hist_tool_div.transition()
@@ -204,14 +204,12 @@
 												}
 												else if (bttnID == "15data") {
 													//2015 data
-													data_file = "/data/data.csv"
+													data_file = "/data/tree_top5_data.csv"
 													SelectionYear.innerHTML = "2015 data"
 													//changing the text saying what we are currently visualizing
 													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
 													update_hist(data_file)
 												};
-
-
 											});
 
 										function update_hist(data_file) {
@@ -219,19 +217,18 @@
 												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
 												return d;
 											}, function (error, data) {
-												if (error) throw error;
+												if (error) throw error;											
 
-												var keys = data.columns.slice(1);
+												var keys = ["NYC", "Bronx", "Brooklyn", "Staten Island", "Manhattan", "Queens"];
 
 												x0.domain(data.map(function (d) { return d.Tree; }));
 												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key]; }); })]).nice();
-
+												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key];}); })]).nice();
+												
 												g.selectAll("g")
 													.data(data)
 													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
-													.selectAll("rect")
-													//.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key] }; }); })
+												.selectAll("rect")
 													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
 													.transition()
 													.duration(1000)

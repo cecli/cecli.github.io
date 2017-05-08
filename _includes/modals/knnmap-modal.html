@@ -19,18 +19,18 @@
 						<head>
 							<meta charset="utf-8">
 							<title>D3: Setting path fills</title>
-							<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
+							<script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
 							<style type="text/css">
 								.background {
-									fill: #eee;
 									pointer-events: all;
 								}
 								
 								div.tooltip {
 									box-sizing: border-box;
-									display: inline;
+									width: 450px;
+									max-width: 450px;
+									display: inline-block;
 									font-size: 20px;
-									width: 100%;
 									z-index: 10000;
 									line-height: 1;
 									color: rgba(0, 0, 0, 0.8);
@@ -41,7 +41,6 @@
 								
 								#tooltip {
 									position: absolute;
-									width: 200px;
 									height: auto;
 									padding: 10px;
 									background-color: white;
@@ -53,12 +52,16 @@
 									box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
 									pointer-events: none;
 								}
+								
+								b.boro {
+									font-size: 26px;
+								}
 							</style>
 						</head>
 
 						<h4 class="Description" id="KnnSelection" margin-left="100px">
 							<!-- What you are actually visualizing. Will change on click of buttons -->
-							You are now visualizing: Poor trees
+							Click a button to see the KNN results of predicting tree health based on GPS locations.
 						</h4>
 						<button type="button"><p id="poordata">Show poor</p></button>
 						<button type="button"><p id="fairdata">Show fair</p></button>
@@ -68,7 +71,7 @@
 							<script type="text/javascript">
 								//Width and height
 								var w = 1700;
-								var h = 900;
+								var h = 1100;
 
 								//Tooltip
 								var knn_tool_div = d3.select("#map_div").append("div")
@@ -80,95 +83,243 @@
 									d3.csv("/data/knn/poorknn.csv", function (data2) {
 										d3.csv("/data/knn/goodknn.csv", function (data3) {
 											d3.csv("/data/total_nyc_tree_count.csv", function (total_trees_data) {
-												
-												//Define map projection
-												var projection = d3.geo.mercator()
-													.center([-73.9541, 40.712784]) //[e/w, n/s]
-													.translate([w / 2, h / 2])
-													.scale([67000]);
+												d3.csv("/data/boro_total_trees.csv", function (boro_total_trees) {
+													d3.csv("/data/tree_top5_data.csv", function (tree_top5_data) {
+														//Define map projection
+														var projection = d3.geo.mercator()
+															.center([-74.0941, 40.732784]) //[e/w, n/s]
+															.translate([w / 2, h / 2])
+															.scale([73000]);
 
-												//Define path generator
-												var path = d3.geo.path()
-													.projection(projection);
+														//Define path generator
+														var path = d3.geo.path()
+															.projection(projection);
 
-												//Create SVG element
-												var svg_map = d3.select("#map_div")
-													.append("svg")
-													.attr("width", w)
-													.attr("height", h)
-													.style("position", "relative")
-													.style("width", "100%")
+														//Create SVG element
+														var svg_map = d3.select("#map_div")
+															.append("svg")
+															.attr("width", w)
+															.attr("height", 800)
+															.style("position", "relative")
+															.style("width", "100%")
+															imgUrl = "https://media.timeout.com/images/103451632/image.jpg";
 
-												//Adding background to svg
-												svg_map.append('rect')
-													.attr("class", "background")
-													.attr("width", "1300")
-													.attr("height", "900")
+														var color = d3.scale.quantize()
+															.range(['rgb(214, 245, 214)','rgb(173, 235, 173)','rgb(132, 225, 132)','rgb(91, 215, 91)','rgb(50, 205, 50)','rgb(40, 164, 40)','rgb(30, 123, 30)','rgb(20, 82, 20)'])
 
-												//Load in GeoJSON data
-												d3.json("data/geojson/boroughs.geojson", function (json) {
+														color.domain([
+															d3.min(boro_total_trees, function (d) { return d.Count; }),
+															d3.max(boro_total_trees, function (d) { return d.Count; })
+														]);
 
-													//Bind data and create one path per GeoJSON feature
-													svg_map.selectAll("path")
-														.data(json.features)
-														.enter()
-														.append("path")
-														.attr("d", path)
-														.style("fill", "steelblue")
-														.on("mouseover", function (d) {
-															var boro_area = ""
-															var boro_trees = 0
-															if(d.properties.BoroName == "Manhattan"){
-																boro_area = "59.1 sqkm"
-																boro_trees = total_trees_data[0].Manhattan
-															} else if (d.properties.BoroName == "Queens"){
-																boro_area = "280 sqkm"
-																boro_trees = total_trees_data[0].Queens
-															} else if (d.properties.BoroName == "Staten Island"){
-																boro_area = "152 sqkm"
-																boro_trees = total_trees_data[0].Staten_Island
-															}
-															else if (d.properties.BoroName == "Brooklyn"){
-																boro_area = "180 sqkm"
-																boro_trees = total_trees_data[0].Brooklyn
-															}
-															else if (d.properties.BoroName == "Bronx"){
-																boro_area = "110 sqkm"
-																boro_trees = total_trees_data[0].Bronx
-															}
-															knn_tool_div.transition()
-																.duration(10)
-																.style("opacity", .9);
-															d3.select(this)
-																.style("opacity", 0.5)
-																.attr("stroke-width", "12px");
-															knn_tool_div.html("<b>" + d.properties.BoroName + "</b>" + "<br>" + "area: " + boro_area + " <i>" + "<br>" + "has " + boro_trees + "</i> trees")
-																.style("left", (-250) + "px")
-																.style("top", (360) + "px");
-														})
-														.on("mouseout", function (d) {
-															knn_tool_div.transition()
-																.duration(200)
-																.style("opacity", 0);
-															d3.select(this)
-																.style("opacity", .9);
-														});
+														svg_map.append("defs")
+															.append("pattern")
+															.attr("id", "venus")
+															.attr('patternUnits', 'userSpaceOnUse')
+															.attr("width", "1300")
+															.attr("height", "1300")
+															.append("image")
+															.attr("xlink:href", imgUrl)
+																.attr("width", "1300")
+																.attr("height", "900")
+																.style("opacity", 0.5);
 
-													addDots();
+														//Adding background to svg
+														svg_map.append('rect')
+															.attr("class", "background")
+															.attr("width", "1300")
+															.attr("height", "1100")
+															.attr("fill", "url(#venus)");
 
-													d3.selectAll("p")
-														.on("click", function () {
-															var bttnID = d3.select(this).attr("id");
-															var des = document.getElementById("KnnSelection")
 
-															//Handle buttons for the different years
-															if (bttnID == "poordata") {
-																svg_map.selectAll("circle").remove()
+														//Load in GeoJSON data
+														d3.json("data/geojson/boroughs.geojson", function (boro_json) {
+															d3.json("data/geojson/pediacitiesnycneighborhoods.geojson", function (nbh_json) {
+
+																for (var i = 0; i < boro_total_trees.length; i++) {
+
+																	//Grab district name
+																	var dataDis = boro_total_trees[i].Boro;
+
+																	//Grab data value, and convert from string to float
+																	var dataValue = parseFloat(boro_total_trees[i].Count);
+
+																	//Find the corresponding state inside the GeoJSON
+																	for (var j = 0; j < boro_json.features.length; j++) {
+
+																		var jsonState = boro_json.features[j].properties.BoroName;
+
+																		if (dataDis == jsonState) {
+
+																			//Copy the data value into the JSON
+																			boro_json.features[j].properties.Count = dataValue;
+
+																			//Stop looking through the JSON
+																			break;
+																		}
+																	}
+																}
+
+																//Bind data and create one path per GeoJSON feature
+																svg_map.selectAll("path")
+																	.data(boro_json.features)
+																	.enter()
+																	.append("path")
+																	.attr("d", path)
+																	.style("fill", function (d) {
+																		//Get data value
+																		var value = d.properties.Count;
+
+																		if (value) {
+																			//If value exists…
+																			return color(value);
+																		} else {
+																			//If value is undefined…
+																			return "#ccc";
+																		}
+																	})
+																	.on("mouseover", function (d) {
+																		var boro_area = ""
+																		var boro_trees = 0
+																		var boro_good_health_perc = 0
+																		var top5 = "";																		
+																		if (d.properties.BoroName == "Manhattan") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + ": " + tree_top5_data[i].Manhattan;
+																			}
+																			boro_area = "59.1 sqkm"
+																			boro_trees = total_trees_data[0].Manhattan_Total
+																			boro_good_health_perc = total_trees_data[0].Manhattan_Good_Perc
+																			boro_poor_health = total_trees_data[0].Manhattan_Poor
+																		} else if (d.properties.BoroName == "Queens") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + ": " + tree_top5_data[i].Queens;
+																			}
+																			boro_area = "280 sqkm"
+																			boro_trees = total_trees_data[0].Queens_Total
+																			boro_good_health_perc = total_trees_data[0].Queens_Good_Perc
+																			boro_poor_health = total_trees_data[0].Queens_Poor
+																		} else if (d.properties.BoroName == "Staten Island") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + ": " + tree_top5_data[i].StatenIsland;
+																			}
+																			boro_area = "152 sqkm"
+																			boro_trees = total_trees_data[0].Staten_Total
+																			boro_good_health_perc = total_trees_data[0].Staten_Good_Perc
+																			boro_poor_health = total_trees_data[0].Staten_Poor
+																		}
+																		else if (d.properties.BoroName == "Brooklyn") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + ": " + tree_top5_data[i].Brooklyn;
+																			}
+																			boro_area = "180 sqkm"
+																			boro_trees = total_trees_data[0].Brooklyn_Total
+																			boro_good_health_perc = total_trees_data[0].Brooklyn_Good_Perc
+																			boro_poor_health = total_trees_data[0].Brooklyn_Poor
+																		}
+																		else if (d.properties.BoroName == "Bronx") {
+																			for (var i = 0; i < tree_top5_data.length; i++) {
+																				top5 += "<br>" + tree_top5_data[i].Tree + ": " + tree_top5_data[i].Bronx;
+																			}
+																			boro_area = "110 sqkm"
+																			boro_trees = total_trees_data[0].Bronx_Total
+																			boro_good_health_perc = total_trees_data[0].Bronx_Good_Perc
+																			boro_poor_health = total_trees_data[0].Bronx_Poor
+																		}
+																		knn_tool_div.transition()
+																			.duration(10)
+																			.style("opacity", 1);
+																		d3.select(this)
+																			.style("opacity", 0.5)
+																			.attr("stroke-width", "12px");
+																		knn_tool_div.html("<b class=\"boro\">" + "Borough: " + d.properties.BoroName + "</b>" + "<br>" + "Area: " + boro_area + "<br>" + "has " + boro_trees + " trees" +
+																			"<br>" + "of which " + boro_good_health_perc + "% are in <font color=\"green\">good</font> health" + "<br>" + 
+																			"and " + (100 - boro_good_health_perc).toFixed(2) + "% of trees are in <font color=\"red\">poor</font> health" +  "<br><br>" + "<b><i>" + "</b>" +
+																			"<br><br>" + "The top 5 trees in each borough are: " + "<br>" + top5)
+																			.style("left", (50) + "px")
+																			.style("top", (360) + "px");
+																	})
+																	.on("mouseout", function (d) {
+																		knn_tool_div.transition()
+																			.duration(200)
+																			.style("opacity", 0);
+																		d3.select(this)
+																			.style("opacity", 1);
+																	});
+
+																d3.selectAll("p")
+																	.on("click", function () {
+																		var bttnID = d3.select(this).attr("id");
+																		var des = document.getElementById("KnnSelection")
+
+																		if (bttnID == "poordata") {
+																			svg_map.selectAll("circle").remove()
+																			svg_map.selectAll("circle")
+																				.data(data2)
+																				.enter()
+																				.append("circle")
+																				.transition().duration(1500)
+																				.attr("cx", function (d) {
+																					return projection([d.lon, d.lat])[0];
+																				})
+																				.attr("cy", function (d) {
+																					return projection([d.lon, d.lat])[1];
+																				})
+																				.attr("r", 1.2)
+																				.style("fill", "red")
+																				.style("opacity", 0.9);
+																			//changing the text saying what we are currently visualizing
+																			KnnSelection.innerHTML = "Poor health"
+																			document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
+																		}
+																		else if (bttnID == "fairdata") {
+																			svg_map.selectAll("circle").remove()
+																			svg_map.selectAll("circle")
+																				.data(data1)
+																				.enter()
+																				.append("circle")
+																				.transition().duration(1500)
+																				.attr("cx", function (d) {
+																					return projection([d.lon, d.lat])[0];
+																				})
+																				.attr("cy", function (d) {
+																					return projection([d.lon, d.lat])[1];
+																				})
+																				.attr("r", 1.2)
+																				.style("fill", "blue")
+																				.style("opacity", 0.9);
+																			//changing the text saying what we are currently visualizing
+																			KnnSelection.innerHTML = "Fair health"
+																			document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
+																		}
+																		else if (bttnID == "gooddata") {
+																			svg_map.selectAll("circle").remove()
+																			svg_map.selectAll("circle")
+																				.data(data3)
+																				.enter()
+																				.append("circle")
+																				.transition().duration(1500)
+																				.attr("cx", function (d) {
+																					return projection([d.lon, d.lat])[0];
+																				})
+																				.attr("cy", function (d) {
+																					return projection([d.lon, d.lat])[1];
+																				})
+																				.attr("r", 1.2)
+																				.style("fill", "green")
+																				.style("opacity", 0.9);
+																			//changing the text saying what we are currently visualizing
+																			KnnSelection.innerHTML = "Good health"
+																			document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
+																		};
+																	});
+															});
+
+															function addDots() {
 																svg_map.selectAll("circle")
 																	.data(data2)
 																	.enter()
 																	.append("circle")
-																	.transition().duration(1500)
 																	.attr("cx", function (d) {
 																		return projection([d.lon, d.lat])[0];
 																	})
@@ -178,217 +329,10 @@
 																	.attr("r", 1.2)
 																	.style("fill", "red")
 																	.style("opacity", 0.9);
-																//changing the text saying what we are currently visualizing
-																KnnSelection.innerHTML = "Poor data"
-																document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
-															}
-															else if (bttnID == "fairdata") {
-																svg_map.selectAll("circle").remove()
-																svg_map.selectAll("circle")
-																	.data(data1)
-																	.enter()
-																	.append("circle")
-																	.transition().duration(1500)
-																	.attr("cx", function (d) {
-																		return projection([d.lon, d.lat])[0];
-																	})
-																	.attr("cy", function (d) {
-																		return projection([d.lon, d.lat])[1];
-																	})
-																	.attr("r", 1.2)
-																	.style("fill", "blue")
-																	.style("opacity", 0.9);
-																//changing the text saying what we are currently visualizing
-																KnnSelection.innerHTML = "Fair data"
-																document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
-															}
-															else if (bttnID == "gooddata") {
-																svg_map.selectAll("circle").remove()
-																svg_map.selectAll("circle")
-																	.data(data3)
-																	.enter()
-																	.append("circle")
-																	.transition().duration(1500)
-																	.attr("cx", function (d) {
-																		return projection([d.lon, d.lat])[0];
-																	})
-																	.attr("cy", function (d) {
-																		return projection([d.lon, d.lat])[1];
-																	})
-																	.attr("r", 1.2)
-																	.style("fill", "green")
-																	.style("opacity", 0.9);
-																//changing the text saying what we are currently visualizing
-																KnnSelection.innerHTML = "Good data"
-																document.getElementById("KnnSelection").innerHTML = "You are now visualizing: " + KnnSelection.innerHTML;
-															};
-														});
-
-													// var i = 0;
-													// var inter = setInterval(function() {
-													// 	i++;
-													// 	if (i == 1) {
-													// 		//updateMap(data1);
-													// 		console.log("update1")
-
-													// 		svg_map.selectAll("circle").remove()
-													// 		svg_map.selectAll("circle")
-													// 			.data(data2)
-													// 			.enter()
-													// 			.append("circle")
-													// 			.transition().duration(1500)
-													// 			.attr("cx", function (d) {
-													// 				return projection([d.lon, d.lat])[0];
-													// 			})
-													// 			.attr("cy", function (d) {
-													// 				return projection([d.lon, d.lat])[1];
-													// 			})
-													// 			.attr("r", 1.2)
-													// 			.style("fill", "red")
-													// 			.style("opacity", 0.9);
-													// 	} else if (i == 2) {
-													// 		//updateMap(data2);														
-													// 		console.log("update2")
-
-													// 		svg_map.selectAll("circle").remove()
-													// 		svg_map.selectAll("circle")
-													// 			.data(data1)
-													// 			.enter()
-													// 			.append("circle")
-													// 			.transition().duration(1500)
-													// 			.attr("cx", function (d) {
-													// 				return projection([d.lon, d.lat])[0];
-													// 			})
-													// 			.attr("cy", function (d) {
-													// 				return projection([d.lon, d.lat])[1];
-													// 			})
-													// 			.attr("r", 1.2)
-													// 			.style("fill", "blue")
-													// 			.style("opacity", 0.9);
-													// 	} else if (i == 3) {
-													// 		i = 0;
-													// 		//updateMap(data3);
-													// 		console.log("update3")
-
-													// 		svg_map.selectAll("circle").remove()
-													// 		svg_map.selectAll("circle")
-													// 			.data(data3)
-													// 			.enter()
-													// 			.append("circle")
-													// 			.transition().duration(1500)
-													// 			.attr("cx", function (d) {
-													// 				return projection([d.lon, d.lat])[0];
-													// 			})
-													// 			.attr("cy", function (d) {
-													// 				return projection([d.lon, d.lat])[1];
-													// 			})
-													// 			.attr("r", 1.2)
-													// 			.style("fill", "green")
-													// 			.style("opacity", 0.9);
-													// 	}
-													// }, 6000);
-												});
-
-												function addDots() {
-													//Adding more dots than you can count
-													// svg_map.selectAll("circle")
-													// 	.data(data1)
-													// 	.enter()
-													// 	.append("circle")
-													// 	.attr("cx", function (d) {
-													// 		return projection([d.lon, d.lat])[0];
-													// 	})
-													// 	.attr("cy", function (d) {
-													// 		return projection([d.lon, d.lat])[1];
-													// 	})
-													// 	.attr("r", 1.5)
-													// 	.style("fill", "orange")
-													// 	.style("opacity", 0.9);
-													// svg_map.selectAll("circle")
-													// 	.data(data2)
-													// 	.enter()
-													// 	.append("circle")
-													// 	.attr("cx", function (d) {
-													// 		return projection([d.lon, d.lat])[0];
-													// 	})
-													// 	.attr("cy", function (d) {
-													// 		return projection([d.lon, d.lat])[1];
-													// 	})
-													// 	.attr("r", 1.5)
-													// 	.style("fill", "red")
-													// 	.style("opacity", 0.9);
-													svg_map.selectAll("circle")
-														.data(data2)
-														.enter()
-														.append("circle")
-														.attr("cx", function (d) {
-															return projection([d.lon, d.lat])[0];
+															}					
 														})
-														.attr("cy", function (d) {
-															return projection([d.lon, d.lat])[1];
-														})
-														.attr("r", 1.2)
-														.style("fill", "red")
-														.style("opacity", 0.9);
-												}
-
-												function updateMap(dat) {
-													console.log("updateMap")
-													// 	var animate = function() {
-													// 		console.log("animate")													   
-													// 		d3.select(this).transition().duration(1000)
-													// 			.attr("r", 7).each("end", function() {														
-													// 		d3.select(this).transition().duration(1000)
-													// 			.attr("r", 3).each("end", animate)});																								
-													// }
-
-													// svg_map.selectAll("circle").remove()
-													// svg_map.selectAll("circle")
-													// 	.data(dat)
-													// 	.enter()
-													// 	.append("circle")
-													// 	.transition().duration(1500)
-													// 	.attr("cx", function (d) {
-													// 		return projection([d.lon, d.lat])[0];
-													// 	})
-													// 	.attr("cy", function (d) {
-													// 		return projection([d.lon, d.lat])[1];
-													// 	})
-													// 	.attr("r", 1.5)
-													// 	.style("fill", "red")
-													// 	.style("opacity", 0.9);
-
-													// svg_map.select("#data2dots").selectAll("circle").remove()	
-													// svg_map.select("#data2dots").selectAll("circle")
-													// 		.data(data2)
-													// 		.enter()
-													// 		.append("circle")
-													// 		.attr("cx", function(d) {
-													// 			return projection_map([d.lat, d.lon])[0];
-													// 		})
-													// 		.attr("cy", function(d) {
-													// 			return projection_map([d.lat, d.lon])[1];
-													// 		})
-													// 		.attr("r", 10)
-													// 		.style("stroke-opacity", 0.6)
-													// 		.style("stroke-width", 5)
-													// 		.style("stroke", "white")
-													// 		.style("fill", "red")
-													// 		.style("opacity", 1);
-
-
-													// svg_map.select("circle")
-													//  	   .data(dat)
-													// 	   .attr("cx", function(d) {
-													// 		   return projection([d.lon, d.lat])[0];
-													// 	   })
-													// 	   .attr("cy", function(d) {
-													// 		   return projection([d.lon, d.lat])[1];
-													// 	   })
-													// 	   .attr("r", 5).on("end", updateMap)
-													// 	   .style("fill", "red")
-													// 	   .style("opacity", 0.9)
-												}
+													})
+												})
 											});
 										});
 									});
