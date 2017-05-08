@@ -96,18 +96,47 @@
 										.attr("class", "tooltip")
 										.style("z-index", 10000)
 										.style("opacity", 0);
+									var data_file = "/data/tree_top5_data.csv";
 
-									d3.csv("/data/tree_top5_data.csv", function (d, i, columns) {
-										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
-										return d;
-									}, function (error, data) {
-										if (error) throw error;
+									var xAxis = d3.axisBottom(x0);
+									var yAxis = d3.axisLeft(y).ticks(null, "s");
 
-										var keys = data.columns.slice(1);
+
+									//d3.csv(data_file, function (d, i, columns) {
+										//for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
+
+									d3.csv(data_file, function (error, data){
+											var keys;
+											var Tree;
+								            if(error){
+								                 console.log(error)
+								            } else{
+								            	keys = d3.keys(data[0]);
+								                data.map(function(d){ 
+								                    return{
+								                    	Tree: d.Tree, 
+								                    	value: d.value
+								                    }
+
+								                });
+								            };
+								            key_new = keys.splice(0,1)
+								            console.log(keys);
+								            load_data(data, keys);
+									});
+
+										//console.log("ciaone")
+										//console.log(columns.length)
+										//return iter_file(d, i, columns)
+										//return d;
+										
+									
+									function load_data(data, keys){	
 
 										x0.domain(data.map(function (d) { return d.Tree; }));
 										x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-										y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key];}); })]).nice();
+										//y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key];}); })]).nice();
+										y.domain([0, 95000]).nice();
 										
 										g.append("svg")
 											.selectAll("g")
@@ -144,11 +173,11 @@
 										g.append("g")
 											.attr("class", "axis")
 											.attr("transform", "translate(0," + height + ")")
-											.call(d3.axisBottom(x0));
+											.call(xAxis);
 
 										g.append("g")
 											.attr("class", "axis")
-											.call(d3.axisLeft(y).ticks(null, "s"))
+											.call(yAxis)
 											.append("text")
 											.attr("x", 2)
 											.attr("y", y(y.ticks().pop()) + 0.5)
@@ -179,67 +208,104 @@
 											.attr("dy", "0.32em")
 											.text(function (d) { return d; });
 
-										d3.selectAll("p")
-											.on("click", function () {
-												var bttnID = d3.select(this).attr("id");
-												var des = document.getElementById("SelectionYear")
+									};
 
-												//Handle buttons for the different years
-												if (bttnID == "95data") {
-													//1995 data
-													data_file = "/data/data1995.csv"
-													SelectionYear.innerHTML = "1995 data"
-													//changing the text saying what we are currently visualizing
-													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
-													update_hist(data_file)
-												}
-												else if (bttnID == "05data") {
-													//2005 data
-													data_file = "/data/data2005.csv"
-													SelectionYear.innerHTML = "2005 data"
-													//changing the text saying what we are currently visualizing
-													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
-													update_hist(data_file)
 
-												}
-												else if (bttnID == "15data") {
-													//2015 data
-													data_file = "/data/tree_top5_data.csv"
-													SelectionYear.innerHTML = "2015 data"
-													//changing the text saying what we are currently visualizing
-													document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
-													update_hist(data_file)
-												};
-											});
+									d3.selectAll("p")
+										.on("click", function () {
+											var bttnID = d3.select(this).attr("id");
+											var des = document.getElementById("SelectionYear")
 
-										function update_hist(data_file) {
-											d3.csv(data_file, function (d, i, columns) {
-												for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
-												return d;
-											}, function (error, data) {
-												if (error) throw error;											
+											//Handle buttons for the different years
+											if (bttnID == "95data") {
+												//1995 data
+												data_file = "/data/data1995.csv";
+												SelectionYear.innerHTML = "1995 data";
+												//changing the text saying what we are currently visualizing
+												document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
+												update_histogram(data_file);
+											}
+											else if (bttnID == "05data") {
+												//2005 data
+												data_file = "/data/data2005.csv";
+												SelectionYear.innerHTML = "2005 data";
+												//changing the text saying what we are currently visualizing
+												document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
+												update_histogram(data_file);
 
-												var keys = ["NYC", "Bronx", "Brooklyn", "Staten Island", "Manhattan", "Queens"];
+											}
+											else if (bttnID == "15data") {
+												//2015 data
+												data_file = "/data/tree_top5_data.csv";
+												SelectionYear.innerHTML = "2015 data";
+												//changing the text saying what we are currently visualizing
+												document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
+												update_histogram(data_file);
+											};
+									}); //end of main block
 
-												x0.domain(data.map(function (d) { return d.Tree; }));
-												x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-												y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key];}); })]).nice();
-												
-												g.selectAll("g")
-													.data(data)
-													.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
-												.selectAll("rect")
-													.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
-													.transition()
-													.duration(1000)
-													.attr("x", function (d) { return x1(d.key); })
-													.attr("y", function (d) { return y(d.value); })
-													.attr("width", x1.bandwidth())
-													.attr("height", function (d) { return height - y(d.value); })
-													.attr("fill", function (d) { return z(d.key); });
-											});
-										}
-									});
+									function update_hist(data_file) {
+										d3.csv(data_file, function (data, i, columns) {
+											console.log("ciaone")
+
+											//console.log(columns.length)
+											return iter_file(d, i, columns);
+										}, function (error, data) {
+											if (error) throw error;											
+
+											var keys = ["NYC", "Bronx", "Brooklyn", "Staten Island", "Manhattan", "Queens"];
+
+										});
+									}
+
+									function update_histogram(data_file){
+										d3.csv(data_file, function (error, data){
+											var keys;
+											var Tree;
+								            if(error){
+								                 console.log(error)
+								            } else{
+								            	keys = d3.keys(data[0]);
+								                data.map(function(d){ 
+								                    return{
+								                    	Tree: d.Tree, 
+								                    	value: d.value
+								                    }
+
+								                });
+								            };
+								            key_new = keys.splice(0,1)
+								            //console.log(keys);
+								            update_data(data, keys);
+									    });
+									}
+
+									function update_data(data, keys){
+										//x0.domain(d3.map(data, function (d) { console.log(d.Tree); return d.Tree; }));
+										x1.domain(keys).rangeRound([0, x0.bandwidth()]);
+										//y.domain([0, d3.max(data, function (d) { return d3.max(keys, function (key) { return d[key];}); })]).nice();
+										
+										g.selectAll("g")
+											.data(data)
+											//.attr("transform", function (d) { return "translate(" + x0(d.Tree) + ",0)"; })
+											.selectAll("rect")
+											.data(function (d) { return keys.map(function (key) { return { key: key, value: d[key], trees: d.Tree }; }); })
+											.transition()
+											.duration(1000)
+											.attr("x", function (d) { return x1(d.key); })
+											.attr("y", function (d) { return y(d.value); })
+											.attr("width", x1.bandwidth())
+											.attr("height", function (d) { return height - y(d.value); })
+											.attr("fill", function (d) { return z(d.key); });
+									}
+
+
+									function iter_file(d, i, columns){
+										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
+											console.log("ciao");
+											console.log(d);
+										return d;
+									}
 								</script>
 							</div>
 						</div>
