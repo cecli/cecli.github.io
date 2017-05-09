@@ -20,8 +20,7 @@
 						<html lang="en">
 						<head>
 							<meta charset="utf-8">
-							<title>Histogram</title>
-							<script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
+							<title>Histogram</title>							<
 							<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 							<style type="text/css">
 								div.tooltip {
@@ -61,14 +60,14 @@
 									<!-- What you are actually visualizing. Will change on click of buttons -->
 									You are now visualizing: 2015 Data
 								</h4>
-								<button type="button"><p id="95data">Change to 1995 data</p></button>
-								<button type="button"><p id="05data">Change to 2005 data</p></button>
-								<button type="button"><p id="15data">Change to 2015 data</p></button>
+								<button type="button" onclick="histBtnClicked('95data')"><p id="95data">Change to 1995 data</p></button>
+								<button type="button" onclick="histBtnClicked('05data')"><p id="05data">Change to 2005 data</p></button>
+								<button type="button" onclick="histBtnClicked('15data')"><p id="15data">Change to 2015 data</p></button>
 								<br><br>
 
 								<script type="text/javascript">
 								
-									var svg_hist = d3.select("svg")
+									var svg_hist = d3.select("#hist_svg")
 									margin = { top: 20, right: 20, bottom: 30, left: 40 },
 										width = +svg_hist.attr("width") - margin.left - margin.right,
 										height = +svg_hist.attr("height") - margin.top - margin.bottom,
@@ -119,11 +118,6 @@
 								            key_new = keys.splice(0,1)
 								            load_data(data, keys);
 									});
-
-										//console.log("ciaone")
-										//console.log(columns.length)
-										//return iter_file(d, i, columns)
-										//return d;
 										
 									
 									function load_data(data, keys){	
@@ -205,10 +199,8 @@
 
 									};
 
-
-									d3.selectAll("p")
-										.on("click", function () {
-											var bttnID = d3.select(this).attr("id");
+									function histBtnClicked(btnId) {
+											var bttnID = btnId;
 											var des = document.getElementById("SelectionYear")
 
 											//Handle buttons for the different years
@@ -237,7 +229,7 @@
 												document.getElementById("SelectionYear").innerHTML = "You are now visualizing: " + SelectionYear.innerHTML;
 												update_histogram(data_file);
 											};
-									}); //end of main block
+									};
 
 									function update_hist(data_file) {
 										d3.csv(data_file, function (data, i, columns) {
@@ -289,7 +281,6 @@
 											.attr("height", function (d) { return height - y(d.value); })
 											.attr("fill", function (d) { return z(d.key); });
 									}
-
 
 									function iter_file(d, i, columns){
 										for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
