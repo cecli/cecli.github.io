@@ -14,7 +14,6 @@
                     <head>
                         <meta charset="utf-8">
                         <title>D3: A simple scatterplot with value labels</title>
-                        <script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
                         <style type="text/css">
                             .tooltip_problems {
                                 box-sizing: border-box;
@@ -175,7 +174,10 @@
                                         //var sum = d[0] + d[1];
                                         tooltip_problems.transition()
                                             .duration(10)
-                                            .style("opacity", .9);
+                                            .style("opacity", .9)
+                                            .style("z-index", 10000)
+                                            .style("top", (100) + ("px"))
+                                            .style("font-size", (16) + "px");
                                         d3.select(this)
                                             .attr("stroke-width", "5px");
                                         tooltip_problems.html("Problems: " + parseInt(percentage_problem[i]) + "%"

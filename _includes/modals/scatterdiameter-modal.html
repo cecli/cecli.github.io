@@ -1,0 +1,366 @@
+<div class="modal fade" id="scatterdiameter-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl">
+                </div>
+            </div>
+        </div>
+        <div class="container" style="margin-left: 60px">
+            <div class="col-lg-8 col-lg">
+                <div class="modal-body" style="width:1300px">
+                    <html lang="en">
+
+                    <head>
+                        <meta charset="utf-8">
+                        <title>D3 Scatterplot with Regression Line</title>
+                    </head>
+
+                    <body>
+                        <script type="text/javascript" src="https://d3js.org/d3.v4.js">
+
+                        </script>
+                        <div>
+                            <button type="button" id="no2b">NO2</button>
+                            <button type="button" id="o3b">O3</button>
+                            <button type="button" id="pm25b">PM25</button>
+                            <button type="button" id="bcb">Black Carbon</button>
+                            <p></p>
+                        </div>
+                        <p></p>
+                        <div id=TreesAmount style="float:top;">
+                            <div id="airpoll" style="float:left;">
+                                <script>
+                                    var w = 960;
+                                    var h = 500;
+                                    var padding = 100;
+                                    var caption = "NO2 (ppb)";
+
+                                    var coeff = []
+                                    var intercept = []
+                                    var treesAmount = []
+                                    var borough = []
+                                    var cb = []
+                                    var neigh = []
+                                    var no2 = []
+                                    var o3 = []
+                                    var pm25 = []
+                                    var bc = []
+
+                                    var air_poll_path = "data/airpollution/AirPollution_Mod.csv"
+                                    var coeff_path = "data/airpollution/CoeffInterTreesAmount.csv"
+                                    var path_TreesAmount = "data/airpollution/TreesAmount.csv"
+
+                                    var dataset = []
+
+                                    var newline;
+                                    var xScale;
+                                    var yScale;
+                                    var xAxis;
+                                    var yAxis;
+                                    var svg_airpoll1;
+                                    //var cValue;
+                                    //var color;
+                                    var legend;
+                                    var tooltip;
+                                    //create data points
+                                    //var dataset = create_data(numDataPoints);
+
+
+                                    read_csv(air_poll_path, path_TreesAmount, coeff_path, treesAmount, coeff, intercept, caption, "treesAmount");
+                                </script>
+                            </div>
+                            <!-- End of air pollution scatterplot, trees amount-->
+
+
+                            <div id="commdisgeojson" style="float:right;">
+                                <script type="text/javascript">
+                                    //Width and height
+                                    var wg = 500;
+                                    var hg = 700;
+                                    var tooltip2;
+
+
+                                    //Define map projection
+                                    var projection = d3.geo.mercator()
+                                        .center([-73.9741874, 40.7711329])
+                                        .translate([wg / 2, hg / 2])
+                                        .scale([38000]);
+
+                                    //Define path generator
+                                    var path = d3.geo.path()
+                                        .projection(projection);
+
+                                    //Create SVG element
+                                    var svg_mapcb = d3.select("#commdisgeojson")
+                                        .append("svg")
+                                        .attr("width", wg)
+                                        .attr("height", hg)
+                                        .attr("transform", "translate(0," + (-700) + ")");
+
+                                    //Load in GeoJSON data
+                                    d3.json("data/geojson/commdis.geojson", function (json) {
+
+                                        //Bind data and create one path per GeoJSON feature
+                                        svg_mapcb.selectAll("path")
+                                            .data(json.features)
+                                            .enter()
+                                            .append("path")
+                                            .attr("d", path)
+                                            .attr("id", function (d) {
+                                                return ("cb" + d.properties.BoroCD);
+                                            })
+                                            .style("fill", function (d) { return calculateBorough(d.properties.BoroCD); })
+                                            .style("stroke", "black")
+                                            .style("stroke-width", "1.2")
+                                            .on("mouseover", function (d) {
+
+                                                d3.select(this)
+                                                    .style("opacity", "0.4")
+                                                tooltip2.transition()
+                                                    .duration(200)
+                                                    .style("opacity", .9);
+                                                tooltip2.html((d.properties.BoroCD)
+                                                    + "")
+                                                    .style("left", 500 + "px")
+                                                    .style("top", 100 + "px");
+
+                                                d3.selectAll("#cb1" + d.properties.BoroCD)
+                                                    .style("stroke", "black")
+                                                    .style("stroke-width", "4.0")
+                                                    .style("opacity", "0.7")
+
+
+                                            })
+                                            .on("mouseout", function (d) {
+                                                d3.select(this)
+                                                    .style("opacity", "0.9")
+
+                                                tooltip2.transition()
+                                                    .duration(500)
+                                                    .style("opacity", 0);
+
+                                                d3.selectAll("#cb1" + d.properties.BoroCD)
+                                                    .style("stroke-width", "0.5")
+                                                    .style("opacity", "0.9")
+                                            });
+
+
+                                    });
+                                    tooltip2 = d3.select("#commdisgeojson").append("div")
+                                        .attr("class", "tooltip")
+                                        .style("z-index", 10000)
+                                        .style("opacity", 0);
+
+                                    function calculateBorough(d) {
+                                        var cap;
+                                        if (parseInt(d) >= 500) {
+                                            cap = "Staten Island";
+                                        }
+                                        else if (parseInt(d) >= 400) {
+                                            cap = "Queens";
+                                        }
+                                        else if (parseInt(d) >= 300) {
+                                            cap = "Brooklyn";
+                                        }
+                                        else if (parseInt(d) >= 200) {
+                                            cap = "Bronx";
+                                        }
+                                        else if (parseInt(d) >= 100) {
+                                            cap = "Manhattan";
+                                        }
+
+                                        return color1(cValue1(cap));
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+
+                        <p></p>
+                        <div id="diamdiv">
+                            <div id="airpoll_d" style="float:left;">
+                                <script>
+                                    var wd = 960;
+                                    var hd = 500;
+                                    var paddingd = 100;
+                                    var captiond = "NO2 (ppb)";
+
+                                    var coeffd = []
+                                    var interceptd = []
+                                    var diameter = []
+                                    var boroughd = []
+                                    var cbd = []
+                                    var neighd = []
+                                    var no2d = []
+                                    var o3d = []
+                                    var pm25d = []
+                                    var bcd = []
+
+                                    var air_poll_pathd = "data/airpollution/AirPollution_Mod.csv"
+                                    var coeff_pathd = "data/airpollution/CoeffInterDiam.csv"
+                                    var path_diameterd = "data/airpollution/Diameter.csv"
+
+                                    var datasetd = []
+
+                                    var newlined;
+                                    var xScale;
+                                    var yScale;
+                                    var xAxisd;
+                                    var yAxisd;
+                                    var svg_airpoll2;
+                                    //var cValue;
+                                    //var color;
+                                    var legendd;
+                                    var tooltipd;
+                                    //create data points
+                                    //var dataset = create_data(numDataPoints);
+
+
+                                    read_csv_d(air_poll_pathd, path_diameterd, coeff_pathd, diameter, coeffd, interceptd, captiond, "diameter");
+                                </script>
+                            </div>
+                            <!-- End of air pollution scatterplot, diameter-->
+                            <div id="commdisgeojson2" style="float:right;">
+                                <script type="text/javascript">
+                                    //Width and height
+                                    var wgd = 500;
+                                    var hgd = 700;
+                                    var tooltip2d;
+
+
+                                    //Define map projection
+                                    var projectiond = d3.geo.mercator()
+                                        .center([-73.9741874, 40.7711329])
+                                        .translate([wg / 2, hg / 2])
+                                        .scale([38000]);
+
+                                    //Define path generator
+                                    var pathd = d3.geo.path()
+                                        .projection(projection);
+
+                                    //Create SVG element
+                                    var svg_mapcb2 = d3.select("#commdisgeojson2")
+                                        .append("svg")
+                                        .attr("width", wg)
+                                        .attr("height", hg)
+                                        .attr("transform", "translate(0," + (-700) + ")");
+
+                                    //Load in GeoJSON data
+                                    d3.json("data/geojson/commdis.geojson", function (json) {
+
+                                        //Bind data and create one path per GeoJSON feature
+                                        svg_mapcb2.selectAll("path")
+                                            .data(json.features)
+                                            .enter()
+                                            .append("path")
+                                            .attr("d", path)
+                                            .attr("id", function (d) {
+                                                return ("cb_d" + d.properties.BoroCD);
+                                            })
+                                            .style("fill", function (d) { return calculateBorough(d.properties.BoroCD); })
+                                            .style("stroke", "black")
+                                            .style("stroke-width", "1.2")
+                                            .on("mouseover", function (d) {
+
+                                                d3.select(this)
+                                                    .style("opacity", "0.4")
+                                                tooltip2d.transition()
+                                                    .duration(200)
+                                                    .style("opacity", .9);
+                                                tooltip2d.html((d.properties.BoroCD)
+                                                    + "")
+                                                    .style("left", (d3.event.pageX + 5) + "px")
+                                                    .style("top", (d3.event.pageY - 28) + "px");
+
+                                                d3.selectAll("#cb1d" + d.properties.BoroCD)
+                                                    .style("stroke", "black")
+                                                    .style("stroke-width", "4.0")
+                                                    .style("opacity", "0.7")
+
+
+                                            })
+                                            .on("mouseout", function (d) {
+                                                d3.select(this)
+                                                    .style("opacity", "0.9")
+
+                                                tooltip2d.transition()
+                                                    .duration(500)
+                                                    .style("opacity", 0);
+
+                                                d3.selectAll("#cb1d" + d.properties.BoroCD)
+                                                    .style("stroke-width", "0.5")
+                                                    .style("opacity", "0.9")
+                                            });
+
+
+                                    });
+                                    tooltip2d = d3.select("#commdisgeojson2").append("div")
+                                        .attr("class", "tooltip")
+                                        .style("z-index", 10000)
+                                        .style("opacity", 0);
+
+                                    function calculateBorough(d) {
+                                        var capd;
+                                        if (parseInt(d) >= 500) {
+                                            capd = "Staten Island";
+                                        }
+                                        else if (parseInt(d) >= 400) {
+                                            capd = "Queens";
+                                        }
+                                        else if (parseInt(d) >= 300) {
+                                            capd = "Brooklyn";
+                                        }
+                                        else if (parseInt(d) >= 200) {
+                                            capd = "Bronx";
+                                        }
+                                        else if (parseInt(d) >= 100) {
+                                            capd = "Manhattan";
+                                        }
+
+                                        return color2(cValue2(capd));
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            d3.select("#o3b")
+                                .on("click", function () {
+                                    // create new data
+                                    update_fig(o3, 1, "O3 (ppb)");
+                                    update_fig_d(o3d, 1, "O3 (ppb)");
+                                });
+                            d3.select("#pm25b")
+                                .on("click", function () {
+                                    // create new data
+                                    update_fig(pm25, 2, "PM25 (Mcg per cubic meter)")
+                                    update_fig_d(pm25d, 2, "PM25 (Mcg per cubic meter)")
+                                });
+                            d3.select("#bcb")
+                                .on("click", function () {
+                                    // create new data
+                                    update_fig(bc, 3, "Black Carbon (absorbance unit)")
+                                    update_fig_d(bcd, 3, "Black Carbon (absorbance unit)")
+                                });
+                            d3.select("#no2b")
+                                .on("click", function () {
+                                    // create new data
+                                    update_fig(no2, 0, "NO2 (ppb)");
+                                    update_fig_d(no2d, 0, "NO2 (ppb)");
+                                });
+                        </script>
+
+                    </body>
+
+                    </html>
+
+
+                    <button type="button" style="float: right;margin-right: 90px;" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
